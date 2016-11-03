@@ -1,0 +1,99 @@
+{
+	"name"  : "/PROFILE_NAME/",
+	"perms" : {
+		"allowed" : {
+			"layout" : {
+				"change" : {
+					"users" : "*"
+				}
+			},
+			"tab" : {
+				"close" : {
+					"users" : "*"
+				},
+				"change" : {
+					"users" : "*"
+				}
+			},
+			"code-editor": {
+				"create": {
+					"users": "*"
+				},
+				"write": {
+					"users": "*"
+				}
+			},
+			"whiteboard": {
+				"write": {
+					"users": "*"
+				}
+			},
+			"content" : {
+				"library" : {
+					"users" : "*"
+				},
+				"upload" : {
+					"users" : "*"
+				},
+				"share" : {
+					"users" : "*"
+				}
+			},
+			"recording" : {
+				"do" : {
+					"users" : "*"
+				}
+			},
+			"av-microphone" : {
+				"mute" : {
+					"users" : "*"
+				},
+				"startup" : {
+					"users" : "self"
+				},
+				"turn-on" : {
+					"users" : "self"
+				}
+			},
+			"av-camera" : {
+				"disable" : {
+					"users" : "*"
+				},
+				"startup" : {
+					"users" : "self"
+				},
+				"primary-video" : {
+					"users" : "*"
+				},
+				"turn-on" : {
+					"users" : "self"
+				}
+			},
+			"kick" : {
+				"enable" : {
+					"users" : "*"
+				}
+			},
+			"perms" : {
+				"grant": {
+					"users": "*"
+				},
+				"immutable": {
+					"users": "*"
+				}
+			},
+			"write": {
+				"control": {
+					"users": "*"
+				}
+			}
+		},
+		"denied" : {
+			"layout" : {
+				"change" : {
+					"users" : "user1"
+				}
+			}
+		}
+	}
+}

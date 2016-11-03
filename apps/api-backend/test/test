@@ -1,0 +1,19 @@
+{
+	"class_id" : "test80",
+	"time_spec" : {
+		"duration" : 20,
+		"starts" : "2016-04-29T12:12:42.777Z"
+	},
+	"resources" :[{ "name" : "av-tokbox-v2"} ],
+	"attendees" : {
+		"max_attendees" : 20,
+		"named" : []
+	},
+	"display_profile" : { "name" : "sssssdefault1" },
+	"profile" : {
+		"company_info" : {
+			"name" : "wiziq",
+			"auth_type" : "anon"	
+		}
+	}
+}

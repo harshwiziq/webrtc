@@ -1,0 +1,24 @@
+doctype
+html( lang="en" )
+	head
+		title Class Title - #{title}
+		meta( charset='utf-8' )
+		meta( http-equiv='X-UA-Compatible', content='IE=edge' )
+		meta( name='viewport', content='width=device-width, initial-scale=1.0' )
+		meta( name='description', content='WizIQ Virtual Classroom' )
+
+		script( type="text/javascript")
+			|window.require = { waitSeconds : 0 };
+
+		link(href="/landing/stylesheets/opt/" + layout + "/layout.min.css", type="text/css", rel="stylesheet")
+
+		each i in styles
+			each _c in i.css
+				link(href="/landing/stylesheets/less/resources/" + i.resource + '/' + _c + ".css", type="text/css", rel="stylesheet")
+
+		link.theme-link(href="/landing/stylesheets/opt/" + theme + "/theme.min.css", type="text/css", rel="stylesheet")
+
+		script( src='/landing/javascripts/framework/ext/require.js', data-main='/landing/javascripts/framework/v2/framework.min.js', type='text/javascript' )
+
+		link(href="/landing/stylesheets/ext/font-awesome.min.css", type="text/css", rel="stylesheet")
+

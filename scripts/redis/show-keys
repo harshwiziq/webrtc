@@ -1,0 +1,27 @@
+#!/bin/bash
+
+#
+# Calculate canonical path for this script's directory
+#
+CANPATH=`dirname $0`
+
+JQ=$CANPATH/../bin/jq-linux64
+REDIS_CLI=`which redis-cli`
+[ -z "$REDIS_CLI" ] && { echo 'redis-cli not installed. aborting' > /dev/stderr ; exit 1; }
+
+[ $# -lt 1 ] && { echo Usage : `basename $0` 'key-regexp [ -l [ -R] ]' > /dev/stderr ; exit 1; }
+KEYS=$1
+SHOW_VALS=$2
+RAW=$3
+KEYSET=`$REDIS_CLI KEYS "$KEYS"`
+
+[ -z "$KEYSET" ] && { echo No matching keys; exit 1; }
+
+for i in $KEYSET
+do
+	echo 'KEY = '$i
+	[ "$SHOW_VALS" == '-l' ] && {
+			$REDIS_CLI GET $i | $JQ $RAW '.'
+			echo TTL : `$REDIS_CLI TTL $i`
+	}
+done

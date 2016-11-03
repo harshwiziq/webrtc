@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg width="40px" height="40px" viewBox="0 0 40 40" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <g id="Atoms" stroke="none" stroke-width="1">
+        <g id="Modelsheet-#1" transform="translate(-451.000000, -1304.000000)">
+            <g id="Classroom-Controls" transform="translate(135.000000, 1168.000000)">
+                <g id="Screenshare" transform="translate(316.000000, 136.000000)">
+                    <path d="M0,0 L0,31.6666667 L40,31.6666667 L40,0 L0,0 L0,0 Z M36.6666667,28.3333333 L3.33333333,28.3333333 L3.33333333,3.33333333 L36.6666667,3.33333333 L36.6666667,28.3333333 L36.6666667,28.3333333 Z M25.6683333,35 L30,40 L10,40 L14.3316667,35 L25.6683333,35 L25.6683333,35 Z M15,8.33333333 L25,16.1233333 L20.77,16.835 L23.3333333,21.9933333 L20.715,23.3333333 L18.1383333,18.0716667 L15,21.0033333 L15,8.33333333 L15,8.33333333 Z" id="Shape"></path>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

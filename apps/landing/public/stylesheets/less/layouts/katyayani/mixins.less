@@ -1,0 +1,43 @@
+@import "./variables.less";
+
+.trans-size (@duration : 0.2s) {
+		-webkit-transition : @duration ease;
+		transition : @duration ease;
+}
+
+.tab-position () {
+	margin-top:   @nav-height + @gutter-eastwest;
+	margin-left:   @gutter-northsouth / 2;
+	margin-right:   @padding-side;
+	margin-bottom:   @margin-bottom;
+	position: absolute;
+	top:      0px;
+	right:    0px;
+	bottom:   0px;
+	overflow: hidden;
+}
+
+.tab-width (@width-av) {
+	@tab-width : calc(~'100vw - @{width-av} - @{padding-side} * 2 - @{gutter-northsouth}');
+}
+.tab-width-2 (@width-av) {
+	width : calc(~'100vw - @{width-av} - @{padding-side} * 2 - @{gutter-northsouth}');
+}
+.tab-height () {
+	@tab-height : calc(~'100vh - @{nav-height-effective} - @{margin-bottom}');
+}
+
+.transition (@property, @duration : 0.5s, @ease : ease-out) {
+	transition: @property @duration @ease;
+	-webkit-transition: @property @duration @ease;
+	-moz-transition: @property @duration @ease;
+}
+.animation (@name, @direction: normal, @duration : 2s, @ease : ease-out) {
+	animation: @name @duration @ease;
+	-webkit-animation: @name @duration @ease;
+	-moz-animation: @name @duration @ease;
+
+	animation-direction : @direction;
+	-webkit-animation-direction : @direction;
+	-moz-animation-direction : @direction;
+}

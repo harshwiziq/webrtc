@@ -1,0 +1,92 @@
+@import "./variables.less";
+@import "./mixins.less";
+
+#widget-chat {
+	position: absolute;
+	margin-left:   @padding-side;
+	margin-right:   @gutter-northsouth / 2;
+	margin-bottom:   @margin-bottom;
+	left:     0;
+	bottom:   0;
+}
+
+#widget-chat .main-inner {
+	width: 100%;
+	position: absolute;
+	bottom: 0;
+	top: 0;
+	transition: top .5s;
+	-webkit-transition: top .5s;
+	-moz-transition: top .5s;
+}
+
+.set-chat-params(@width-av, @width) {
+	@av-h  : @width-av * 3 / 4;
+	@av-h2 : @width-av * 3 / 16;
+	#widget-chat {
+		top: @nav-height-effective + @av-h + @gutter-eastwest;
+		width: @width;
+
+		& .main-inner.squeeze {
+			top : @av-h2;
+			transition: top .5s;
+			-webkit-transition: top .5s;
+			-moz-transition: top .5s;
+		}
+	}
+	body.av-fullscreen #widget-chat,
+	body.av-tiled #widget-chat {
+		left: calc(~'-@{width} - @{padding-side}');
+		svg {
+			left: calc(~'@{padding-side} + @{width}');
+		}
+
+		& .main-inner.squeeze {
+			top : 0px;
+		}
+	}
+	/*
+	body.av-tiled #widget-chat {
+		left: calc(~'-@{width} - @{padding-side}');
+		svg {
+			left: 0;
+		}
+	}
+	*/
+}
+
+body.av-fullscreen #widget-chat,
+body.av-tiled #widget-chat {
+	height : calc(~'100vh - @{nav-height-effective}');
+	top : @nav-height-effective;
+	z-index: 3;
+	padding-top: 5px;
+
+	transition: height .2s ease-out;
+	-webkit-transition: height .2s ease-out;
+	-moz-transition: height .2s ease-out;
+
+	transition: left .2s ease-out;
+	-webkit-transition: left .2s ease-out;
+	-moz-transition: left .2s ease-out;
+
+	 &.chat-fullheight {
+		 left: 0;
+		 transition: left .2s ease-out;
+		 -webkit-transition: left .2s ease-out;
+		 -moz-transition: left .2s ease-out;
+
+		 animation : fade-in 1s ease-out both;
+		 -webkit-animation : fade-in 1s ease-out both;
+		 -moz-animation : fade-in 1s ease-out both;
+	 }
+}
+
+@keyframes fade-in {
+	0% {
+		opacity : 0;
+	}
+	100% {
+		opacity : 1;
+	}
+}

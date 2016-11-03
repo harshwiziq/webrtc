@@ -1,0 +1,52 @@
+#!/bin/bash
+
+CURL_OPTIONS='-sS --post301 --post302 -kL'
+CURL_OUTINFO='\r\nHTTP CODE : %{http_code}'
+BASENAME=`basename $0`
+DIR=`dirname $0`
+JQ=$DIR/../bin/jq-linux64
+TEMPLATE=$DIR/templates/backend-set-wiziq-end-pts
+TMP=/tmp/backend-set-wiziq-end-pts$$
+
+trap "rm -f $TMP;" SIGHUP SIGINT SIGTERM EXIT
+#set -e
+
+function usage {
+	echo Usage : $0 'options [ -h host ]';
+	echo '  options can be a sequence of the following:';
+	echo '      --status-url  (MANDATORY) : WizIQ endpoint for sending class status';
+	echo '      -h                        : ip or FQDN for the backend server';
+	echo '      --help                    : prints this help';
+	exit 1;
+}
+
+[ $# -lt 1 ] && { usage; }
+
+while [ $# -gt 0 ];
+do
+	[ "$1" == '--status-url' ] && { STATUS_URL=$2; shift; }
+	[ "$1" == '-h' ] && { HOST=$2; shift; }
+	[ "$1" == "--help" ] && { usage; }
+	
+	shift;
+done
+
+#
+# Check for Mandatories
+#
+[ "$STATUS_URL" == "" ] && usage;
+
+#
+# Create the request body
+#
+cp $TEMPLATE $TMP
+sed -i 's@/STATUS_URL/@'$STATUS_URL'@g' $TMP
+cat $TMP | $JQ '.'
+
+[ "$HOST" == "" ] && {
+		export HOST=http://localhost:2178;
+}
+
+curl $CURL_OPTIONS -w "$CURL_OUTINFO" -H "Content-Type: application/json" -X POST -d @$TMP $HOST/backend/admin/wiziq-end-pts
+
+echo

@@ -1,0 +1,53 @@
+{
+  "name": "share",
+  "version": "0.6.3",
+  "description": "A database for concurrent document editing",
+  "keywords": [
+    "operational transformation",
+    "ot",
+    "concurrent",
+    "collaborative",
+    "database",
+    "server"
+  ],
+  "homepage": "",
+  "author": "Joseph Gentle <josephg@gmail.com>",
+  "dependencies": {
+    "browserchannel": "~1",
+    "coffee-script": "<1.7",
+    "connect": "<3.x",
+    "hat": "*",
+    "request": ">= 2.1.1",
+    "restler": "^3.4.0",
+    "socket.io": "~0.8",
+    "socket.io-client": "~0.8",
+    "sockjs": ">= 0.3.1",
+    "ws": "*"
+  },
+  "devDependencies": {
+    "express": "~ 3.x",
+    "optimist": ">= 0.2.4",
+    "nodeunit": "*",
+    "shelljs": "*",
+    "uglify-js": "~1",
+    "websocket": "*"
+  },
+  "engine": "node >= 0.6",
+  "main": "index.js",
+  "bin": {
+    "sharejs": "bin/sharejs",
+    "sharejs-exampleserver": "bin/exampleserver"
+  },
+  "scripts": {
+    "start": "node server.js"
+  },
+  "licenses": [
+    {
+      "type": "MIT"
+    }
+  ],
+  "repository": {
+    "type": "git",
+    "url": "http://github.com/josephg/sharejs.git"
+  }
+}

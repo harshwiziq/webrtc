@@ -1,0 +1,36 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+# All Vagrant configuration is done below. The "2" in Vagrant.configure
+# configures the configuration version (we support older styles for
+# backwards compatibility). Please don't change it unless you know what
+# you're doing.
+Vagrant.configure(2) do |config|
+  config.vm.box = "ubuntu/trusty64"
+
+  config.vm.network "public_network"
+  config.vm.hostname = "sagarmatha"
+
+  config.vm.provision "file", source: "../common/install.sh", destination: "install/install.sh"
+  config.vm.provision "file", source: "../common/install-nodejs.sh", destination: "install/install-nodejs.sh"
+  config.vm.provision "file", source: "../common/install-mongo.sh", destination: "install/install-mongo.sh"
+  config.vm.provision "file", source: "../common/install-docker.sh", destination: "install/install-docker.sh"
+  config.vm.provision "file", source: "../common/install-redis.sh", destination: "install/install-redis.sh"
+  config.vm.provision "file", source: "../common/grant-perms.sh", destination: "install/grant-perms.sh"
+  config.vm.provision "file", source: "../common/grant-sudo.sh", destination: "install/grant-sudo.sh"
+  config.vm.provision "file", source: "../common/install-authbind.sh", destination: "install/install-authbind.sh"
+
+  # Copy configuration files
+  config.vm.provision "file", source: "../common/configs/redis/redis.conf", destination: "install/configs/redis/redis.conf"
+
+  config.vm.provision "shell", inline: "cd install; export WIZIQ_USER=vagrant; bash -x install.sh"
+
+  # VirtualBox Specific configuration
+  config.vm.provider "virtualbox" do |v|
+	    v.name = "Wiziq Vagrant Machine"
+		v.memory = 2048
+		v.cpus = 2
+  end
+
+  ENV["LC_ALL"] = "en_US.UTF-8"
+end

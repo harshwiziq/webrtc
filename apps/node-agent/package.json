@@ -1,0 +1,20 @@
+{
+  "name": "Node-Agent",
+  "version": "0.0.1",
+  "description": "Puts commands ==> action, and relays information",
+  "scripts": {
+    "start": "node app.js"
+  },
+  "dependencies": {
+    "app-module-path": "^1.0.6",
+    "body-parser": "^1.15.0",
+    "bunyan": "^1.8.0",
+    "dockerode": "^2.2.10",
+    "express": "^4.13.4",
+    "ioredis": "^1.15.1",
+    "jquery-deferred": "^0.3.0",
+    "minimist": "^1.2.0",
+    "mkdirp": "^0.5.1",
+    "restler": "^3.4.0"
+  }
+}

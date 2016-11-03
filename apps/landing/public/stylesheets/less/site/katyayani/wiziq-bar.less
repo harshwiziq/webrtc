@@ -1,0 +1,45 @@
+@logo-width: 75px;
+
+.wiziq-bar(@bar-height) {
+	.wiziq-bar {
+		z-index     : 100;
+		position    : relative;
+		top         : 0px;
+		padding-top : 18px;
+		height      : @bar-height;
+
+		.left {
+			width : 50%;
+			display : inline-block;
+			height : 100%;
+
+			.logo {
+				padding-top  : 5px;
+				padding-right : 20px;
+				border-style : none;
+				border-right  : 1px solid white;
+				display : table-cell;
+			}
+
+			span {
+				padding-left : 20px;
+				display : table-cell;
+				vertical-align : middle;
+			}
+		}
+		.right {
+			width : 50%;
+			display : inline-block;
+			text-align : right;
+			height : 100%;
+
+			a {
+				margin-left : 20px;
+			}
+		}
+		svg {
+			width   : @logo-width;
+			height  : 28px;
+		}
+	}
+}

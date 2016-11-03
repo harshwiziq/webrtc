@@ -1,0 +1,11 @@
+div#signout-confirm(data-remodal-id='signout-confirm')
+	.remodal-ss-header
+		include images/signout3.svg
+		p Exit the session ?
+	.remodal-ss-footer
+		p Clicking <b>Yes</b> will log you out of this session. Clicking <b>No</b> will cancel this action, and you will not be logged out.
+	button.remodal-close(data-remodal-action='close')
+	a.cancel(href='javascript:void(0)')
+		button.remodal-cancel(data-remodal-action='cancel') No
+	a.confirm(href='javascript:void(0)')
+		button.remodal-confirm() Yes

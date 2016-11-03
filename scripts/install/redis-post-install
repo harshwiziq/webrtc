@@ -1,0 +1,19 @@
+#!/bin/bash
+
+sudo mkdir /etc/redis
+sudo mkdir /var/redis
+
+SCRIPT_DIR=`dirname $0`
+REDIS_PATH=$SCRIPT_DIR/../../ext/redis-3.0.3/
+
+sudo cp $REDIS_PATH/utils/redis_init_script /etc/init.d/redis_6379
+sudo cp $REDIS_PATH/redis.conf /etc/redis/6379.conf
+
+sudo mkdir -p /var/redis/6379
+
+sudo update-rc.d redis_6379 defaults
+
+#
+# Start the service
+#
+service redis_6379 start

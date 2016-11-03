@@ -1,0 +1,29 @@
+doctype
+html( lang="en" )
+	head
+		title Somanshu
+		link(rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css")
+		link(rel='stylesheet', href='/auth/css/guest.min.css')
+		script(src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js")
+		script(src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js")
+	body
+		link(href='https://fonts.googleapis.com/css?family=Work+Sans:400,300,700', rel='stylesheet', type='text/css')
+		.container-fluid
+			.row
+				.col-md-6.col-md-offset-3
+					.guest-container
+						.top
+							include images/arrow-left.svg
+							.v-line
+							.title-icon
+								include images/user.svg
+							.title-msg
+								.title-info Continue as a guest
+								.title-meta-info Input your name and enter this section...
+						.h-line
+						form
+							.input-container
+								input.input-text(type="text", id="display_name", required="required")
+								label(for="display_name") Name or Nickname...
+								.button-primary
+									span Enter this Section

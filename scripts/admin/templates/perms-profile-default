@@ -1,0 +1,84 @@
+{
+	"name"  : "/PROFILE_NAME/",
+	"perms" : {
+		"allowed" : {
+			"layout" : {
+				"change" : {
+					"users" : "self"
+				}
+			},
+			"tab" : {
+				"close" : {
+					"users" : ""
+				},
+				"change" : {
+					"users" : ""
+				}
+			},
+			"code-editor": {
+				"create": {
+					"users": ""
+				},
+				"write": {
+					"users": ""
+				}
+			},
+			"whiteboard": {
+				"write": {
+					"users": ""
+				}
+			},
+			"code-editor": {
+				"create": {
+					"users": ""
+				},
+				"write": {
+					"users": ""
+				}
+			},
+			"whiteboard": {
+				"write": {
+					"users": ""
+				}
+			},
+			"content" : {
+				"library" : {
+					"users" : ""
+				}
+			},
+			"av-microphone" : {
+				"mute" : {
+					"users" : "self"
+				},
+				"turn-on" : {
+					"users" : "self"
+				}
+			},
+			"kick" : {
+				"enable" : {
+					"users" : ""
+				}
+			},
+			"av-camera" : {
+				"disable" : {
+					"users" : "self"
+				},
+				"turn-on" : {
+					"users" : "self"
+				}
+			}
+		},
+		"denied" : {
+			"layout" : {
+				"change" : {
+					"users" : ""
+				}
+			},
+			"content" : {
+				"library" : {
+					"users" : ""
+				}
+			}
+		}
+	}
+}

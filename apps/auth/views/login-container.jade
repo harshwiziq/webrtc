@@ -1,0 +1,23 @@
+.login-body.main-stage
+	.class-title.header
+		.title-icon
+			include images/title.svg
+		.title-msg
+			span.cls-name Access this presentation
+			span.cls-info
+	.social-auth
+		a.google(href="/auth/auth/google")
+				include images/btn-google.svg
+				span.google-info Sign in with Google
+		a.facebook(href="/auth/auth/fb")
+				include images/btn-fb.svg
+				span.fb-info Sign in with Facebook
+	.wiziq-auth
+		p Or Login with your WizIQ Account
+		a.wiziq(href="/auth/auth/wiziq")
+			.wiziq-inner
+				include images/negative-logo.svg
+			span Sign in with WizIQ
+	a.anon
+		span.guest Continue as Guest
+		include images/arrow-right.svg

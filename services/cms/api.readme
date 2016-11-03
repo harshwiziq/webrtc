@@ -1,0 +1,30 @@
+GET:	curl http://localhost:7099/content/v1/user/<userid>/list | python -m json.tool			
+
+		going forward just appending '?pretty' 	to request will print pretty JSON untill then we can use __python -m__
+
+POST:	curl -H "Content-Type: application/json" -X POST -d '{
+				"name":"calculus-001",
+				"dir":"mathematics/presentations",
+				"flags":"<need to see how should it be implemented>"}'
+			 http://localhost:7099/content/v1/user/<userid>/add 
+
+				OR	--if you want to paste it to terminal, here is the same as one command--
+
+		curl -H "Content-Type: application/json" -X POST -d '{	"name":"calculus-001",	"dir":"mathematics/presentations",	"flags":"<need to see how should it be implemented>"}'	 http://localhost:7099/content/v1/user/<userid>/add 
+		
+
+
+POST:	curl -H "Content-Type: application/json" -X POST -d '{
+				"name":"calculus-001",
+				"dir":"mathematics/presentations",
+				"type":"txt",
+				"size":20,
+				"url":"poiner/to/location/on/cloud"
+				"tags":["content","normal"]}'
+		 http://localhost:7099/content/v1/user/<userid>/added 
+
+				OR
+		
+		curl -H "Content-Type: application/json" -X POST -d '{	"name":"calculus-001",	"dir":"mathematics/presentations",	"type":"txt",	"size":20,	"url":"poiner/to/location/on/cloud",	"tags":["content","normal"]}'		 http://localhost:7099/content/v1/user/<userid>/added 
+
+

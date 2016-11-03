@@ -1,0 +1,71 @@
+@import "./variables.less";
+@import "../../mixins/elements";
+
+body.av-fullscreen #widget-screenshare {
+	border : 1px solid white;
+}
+
+
+/*****************************
+
+  Screenshare dialog styling
+
+*****************************/
+
+.remodal {
+	border-radius: 3px;
+	box-shadow: 0 4px 6px 0 rgba(0, 0, 0, 0.2);
+
+	svg {
+		fill: @gray;
+	}
+
+	.remodal-ss-header {
+		font-stretch: normal;
+		font-family: Roboto;
+		text-align: center;
+		font-style: normal;
+		color: @brand-info;
+		font-size: 24px;
+		font-weight: 500;
+	}
+	.remodal-ss-footer {
+		font-stretch: normal;
+		font-family: Roboto;
+		text-align: center;
+		font-style: normal;
+		color: @brand-info;
+		font-size: 14px;
+		font-weight: 300;
+	}
+}
+
+.remodal-confirm {
+	background-color: @brand-primary;
+	border-radius: 3px;
+	font-stretch: normal;
+	font-family: Roboto;
+	font-style: normal;
+	color: #ffffff;
+	font-size: 20px;
+	font-weight: 500;
+
+	&:hover, &:focus {
+		background-color: @brand-secondary;
+		box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.1);
+	}
+}
+
+.remodal-cancel {
+	font-stretch: normal;
+	font-family: Roboto;
+	font-style: normal;
+	color: @gray-dark;
+	font-size: 14px;
+	font-weight: normal;
+	background-color: #ffffff;
+
+	&:hover, &:focus {
+		color: @brand-secondary;
+	}
+}

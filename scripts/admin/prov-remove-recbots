@@ -1,0 +1,43 @@
+#!/bin/bash
+
+QUIET='-sS'
+CURL_OUTINFO='\r\n[ http-code: %{http_code} ]'
+BASENAME=`basename $0`
+DIR=`dirname $0`
+JQ=$DIR/../bin/jq-linux64
+TMP=/tmp/remove-recbots.$$
+
+trap "rm -f $TMP;" SIGHUP SIGINT SIGTERM EXIT
+#set -e
+
+function usage {
+	echo Usage : $0 '[ options ] <list of vm names>';
+	echo '      --raw      : (OPTIONAL) raw JSON output';
+	echo '      -h         : (OPTIONAL) ip or FQDN for the provisioning server';
+	echo '      --help     : (OPTIONAL) prints the usage';
+	exit 1;
+}
+
+LIST=
+while [ $# -gt 0 ];
+do
+	case "$1" in
+		'--help') usage;
+			;;
+		'--raw') RAW=y;
+			;;
+		*) LIST=$LIST' '$1
+			;;
+	esac
+	shift;
+done
+
+[ -z "$LIST" ] && usage;
+
+# Remove leading whitespace
+[ "$HOST" == "" ] && {
+		export HOST=http://localhost:2178;
+}
+
+node helper-scripts/prov-remove-recbots.js --host $HOST $LIST
+echo

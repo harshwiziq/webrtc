@@ -1,0 +1,96 @@
+#!/bin/bash
+
+BASENAME=`basename $0`
+DIR=`dirname $0`
+JQ=$DIR/../bin/jq-linux64
+CURL_OPTIONS='-sS -kL --post301 --post302'
+STATUS_CODE='\n\ncode : %{http_code}'
+TMP_FILE=/tmp/class-modify-wiziq.$$
+
+trap "rm -f $TMP_FILE; exit" SIGHUP SIGINT SIGTERM EXIT
+#set -x
+#
+# Update Subscription
+#
+
+function usage {
+	echo Usage : $0 'class-template [ options ]';
+	echo
+	echo '    available class-templates are:'
+	for i in templates/modify-class-*;
+	do
+		echo '        * '$i
+	done
+	echo
+	echo '    options:';
+	echo '      --class-id  (MANDATORY) : <anything you like>';
+#	echo '      --starts-in             : <time-in-seconds>';
+	echo '      --duration              : <time-in-minutes> # defaults to 1 hour';
+	echo '      --title                 : class title';
+#	echo '      --time-zone             : <time-zone>';
+	echo '      --max-attendees         : <max number of attendees>';
+#	echo '      --return-url            : url to redirect to when class ends';
+#	echo '      --status-url            : url to hit when class status changes';
+#	echo '      --presenter-email       : presenter new email address';
+	echo '      -h                      : ip or FQDN of the backend host';
+	echo '      --help                  : prints this help';
+	exit 1;
+}
+
+[ $# -lt 1 ] && { usage; }
+
+PROFILE=$1; shift;
+#START_TIME_CST="";
+DURATION="";
+TITLE="";
+MAX_ATT=null;
+
+[ ! -f $PROFILE ] && { echo Profile $PROFILE non-existent; exit 1; }
+
+while [ $# -gt 0 ];
+do
+		[ "$1" == "--class-id" ] && { CLASS_ID=$2; shift; }
+#		[ "$1" == "--starts-in" ] && { 
+#			START_TIME_CST=`TZ=US/Central date -uIseconds -d "$2 seconds"`
+#			shift;
+#		}
+		[ "$1" == "--duration" ] && { DURATION=$2; shift; }
+		[ "$1" == "--title" ] && { TITLE=$2; shift; }
+#		[ "$1" == "--time-zone" ] && { TIME_ZONE=$2; shift; }
+		[ "$1" == "--max-attendees" ] && { MAX_ATT=$2; shift; }
+#		[ "$1" == "--return-url" ] && { RETURN_URL=$2; shift; }
+#		[ "$1" == "--status-url" ] && { STATUS_URL=$2; shift; }
+#		[ "$1" == "--presenter-email" ] && { PRESENTER_EMAIL=$2; shift; }
+		[ "$1" == "-h" ] && { HOST=$2; shift; }
+		[ "$1" == "--help" ] && { usage; }
+		shift;
+done;
+
+#
+# Check for mandatory parameters
+#
+[ "$CLASS_ID" = "" ] && usage;
+
+#
+# Apply filters from the command line
+#
+cp $PROFILE $TMP_FILE
+#sed -iback "s@__START_TIME@$START_TIME_CST@g" $TMP_FILE
+sed -iback "s@__CLASS_ID@$CLASS_ID@g" $TMP_FILE
+sed -iback "s@__DURATION@$DURATION@g" $TMP_FILE
+sed -iback "s@__TITLE@$TITLE@g" $TMP_FILE
+sed -iback "s@__MAX_ATT@$MAX_ATT@g" $TMP_FILE
+#sed -iback "s@__PRESENTER_EMAIL@$PRESENTER_EMAIL@g" $TMP_FILE
+
+cat $TMP_FILE | $JQ '.'
+[ $? -ne 0 ] && { echo JSON Parse error. Aborting ...; exit -1; }
+
+[ "$HOST" == "" ] && {
+	export HOST=http://localhost:2178;
+}
+
+echo -------- RESPONSE --------
+echo 
+curl $CURL_OPTIONS -w "$STATUS_CODE" -H "Content-Type: application/json" -X PUT -d @$TMP_FILE $HOST/backend/wiziq/$CLASS_ID/config 
+
+echo

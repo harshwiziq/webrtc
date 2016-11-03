@@ -1,0 +1,42 @@
+.atl-controls-bar
+	.atl-control(data-id="camera", class=cam_clickable ? "" : "read-only")
+		include images/camera.svg
+	.atl-control.slashed(style="display:none", data-id="camera-slashed", class=cam_clickable ? "" : "read-only")
+		include images/camera-slashed.svg
+
+	.atl-control(data-id="microphone", class=mic_clickable ? "" : "read-only")
+		include images/mic.svg
+	.atl-control.slashed(style="display:none", data-id="microphone-slashed", class=mic_clickable ? "" : "read-only")
+		include images/mic-slashed.svg
+
+	//.atl-control(data-id="speaker")
+	//	include images/speaker.svg
+
+	//.atl-control(data-id="play")
+	//	include images/play.svg
+
+	.atl-control(style="display:none", data-id="write-control", class=wc_clickable ? "": "read-only")
+		include images/write.svg
+
+	.atl-control.slashed(data-id="write-control-slashed", class=wc_clickable ? "": "read-only")
+		include images/write-slashed.svg
+	
+	.atl-control(data-id="kick", class=kick_clickable ? "": "read-only")
+		include images/signout3.svg
+	.atl-control.slashed(style="display:none", data-id="kick-slashed", class=kick_clickable ? "": "read-only")
+		include images/signout3.svg
+		//include images/kick.svg
+
+	//.atl-control.atl-audio-level(data-id="audio-level")
+		.vu-indicator.vu1.active
+			include images/vu1.svg
+		.vu-indicator.vu2
+			include images/vu2.svg
+		.vu-indicator.vu3
+			include images/vu3.svg
+		.vu-indicator.vu4
+			include images/vu4.svg
+		.vu-indicator.vu5
+			include images/vu5.svg
+		.vu-indicator.vu6
+			include images/vu6.svg

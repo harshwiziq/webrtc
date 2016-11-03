@@ -1,0 +1,44 @@
+@import "variables.less";
+@import "fonts.less";
+
+.input-box {
+	input {
+		height: 56px;
+		width: 100%;
+		position: relative;
+		border-width: 0;
+	}
+
+	label {
+		position: absolute;
+		top: 8px;
+		left: 0;
+		margin-left: 21px;
+		font-stretch: normal;
+		font-family: 'Roboto', 'sans-serif';
+		font-style: normal;
+		color: @brand-info;
+		font-size: 18px;
+		font-weight: 300;
+		transition: 0.2s ease;
+	}
+}
+
+.input-text {
+	padding: 1.6em 1.6em 0;
+	font-stretch: normal;
+	font-family: 'Roboto', 'sans-serif';
+	font-style: normal;
+	color: @brand-info;
+	font-size: 14px;
+	font-weight: normal;
+}
+
+.focussed {
+	font-stretch: normal;
+	font-family: 'Roboto', 'sans-serif';
+	font-style: normal;
+	color: @brand-primary;
+	font-size: 12px;
+	font-weight: 300;
+}

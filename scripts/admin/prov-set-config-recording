@@ -1,0 +1,107 @@
+#!/bin/bash
+
+CURL_OPTIONS='-sS --post301 --post302 -kL'
+CURL_OUTINFO='\r\nHTTP CODE : %{http_code}'
+BASENAME=`basename $0`
+DIR=`dirname $0`
+JQ=$DIR/../bin/jq-linux64
+TEMPLATE=$DIR/templates/prov-set-recording
+TMP=/tmp/prov-set-chat$$
+
+
+trap "rm -f $TMP;" SIGHUP SIGINT SIGTERM EXIT
+#set -e
+
+function usage {
+	echo Usage : $0 'options [ -h host ]';
+	echo '  options can be a sequence of the following:';
+	echo '      --client-id (MANDATORY) : azure client id';
+	echo '      --secret-id (MANDATORY) : azure secret id';
+	echo '      --tenant-id (MANDATORY) : azure tenant id';
+	echo '      --sub-id    (MANDATORY) : azure subscription id';
+	echo '      --container-id          : azure blob container name (to store recordings)';
+	echo '      --location              : VM location';
+	echo '      --storage-type          : VM storage type';
+	echo '      --help                  : print this help';
+	echo '      -h                      : ip or FQDN of the provisioning server';
+	exit 1;
+}
+
+[ $# -lt 1 ] && { usage; }
+
+#
+# Defaults
+#
+# These values should be eventually changed
+#CLIENT_ID='35173062-d7ac-4ead-aa59-39c3cec08c97'
+#SUBSCRIPTION_ID='1f4f32e0-afe8-4d0d-8966-2d04f13d56a3'
+#TENANT_ID='4a3607e4-efbf-4212-b9fe-a704c0c6012d'
+#SECRET_ID='20/7oAuvIfA1KKkpcMHqMmEtiLwd2mlKCUpODr1kGrE='
+#CUSTOM_IMAGE_URI='https://recording.blob.core.windows.net/system/Microsoft.Compute/Images/imagecustom/recbot-osDisk.ee034ea5-ce1d-4100-8742-132eee8f8da4.vhd'
+
+LOCATION='southeastasia'
+RESOURCE_GROUP='recbot'
+USER='notadmin'
+PASSWORD='Pa$$w0rd'
+STORAGE_TYPE='Standard_LRS'
+DNS1='8.8.8.8'
+DNS2='8.8.4.4'
+AZURE_STRG_NAME='recording'
+AZURE_STRG_KEY='AnfTIjRiOvSvsg0mzZSBinueZOMk5kPx0B2WjZGUrKoqJkN0jcNgKo5ziIeSoIaxRJwcaxS0lCRiikfFySTTeQ=='
+CONTAINER_ID='rawrecordings'
+OS_IMAGE_URI='https://recording.blob.core.windows.net/system/Microsoft.Compute/Images/imagecustom/recbot-osDisk.ee034ea5-ce1d-4100-8742-132eee8f8da4.vhd'
+WIZIQ_STATUS_URL="https://wiziq.com/dummy-for-now"
+
+
+while [ $# -gt 0 ];
+do
+	[ "$1" == '--client-id'    ] && { CLIENT_ID=$2; shift; }
+	[ "$1" == '--secret-id'    ] && { SECRET_ID=$2; shift; }
+	[ "$1" == '--tenant-id'    ] && { TENANT_ID=$2; shift; }
+	[ "$1" == '--sub-id'       ] && { SUBSCRIPTION_ID=$2; shift; }
+	[ "$1" == '--container-id' ] && { CONTAINER_ID=$2; shift; }
+	[ "$1" == '--location'     ] && { LOCATION=$2; shift; }
+	[ "$1" == '--storage-type' ] && { STORAGE_TYPE=$2; shift; }
+	[ "$1" == '--help'         ] && { usage; }
+	[ "$1" == '-h'             ] && { HOST=$2; shift; }
+
+	shift;
+done
+
+#
+# Check for Mandatories
+#
+[ "$CLIENT_ID" == "" ] && { usage; }
+[ "$SECRET_ID" == "" ] && { usage; }
+[ "$TENANT_ID" == "" ] && { usage; }
+[ "$SUBSCRIPTION_ID" == "" ] && { usage; }
+
+#
+# Create the request body
+#
+cp $TEMPLATE $TMP
+sed -i "s@__CLIENT_ID__@$CLIENT_ID@g" $TMP
+sed -i "s@__SECRET_ID__@$SECRET_ID@g" $TMP
+sed -i "s@__TENANT_ID__@$TENANT_ID@g" $TMP
+sed -i "s@__SUBSCRIPTION_ID__@$SUBSCRIPTION_ID@g" $TMP
+sed -i "s@__LOCATION__@$LOCATION@g" $TMP
+sed -i "s@__RESOURCE_GROUP__@$RESOURCE_GROUP@g" $TMP
+sed -i "s@__USER__@$USER@g" $TMP
+sed -i "s@__PASSWORD__@$PASSWORD@g" $TMP
+sed -i "s@__STORAGE_TYPE__@$STORAGE_TYPE@g" $TMP
+sed -i "s@__OS_IMAGE_URI__@$OS_IMAGE_URI@g" $TMP
+sed -i "s@__DNS1__@$DNS1@g" $TMP
+sed -i "s@__DNS2__@$DNS2@g" $TMP
+sed -i "s@__AZURE_STRG_NAME__@$AZURE_STRG_NAME@g" $TMP
+sed -i "s@__AZURE_STRG_KEY__@$AZURE_STRG_KEY@g" $TMP
+sed -i "s@__CONTAINER_ID__@$CONTAINER_ID@g" $TMP
+sed -i "s@__WIZIQ_STATUS_URL__@$WIZIQ_STATUS_URL@g" $TMP
+cat $TMP | $JQ '.'
+
+[ "$HOST" == "" ] && {
+		export HOST=http://localhost:2178;
+}
+
+curl $CURL_OPTIONS -w "$CURL_OUTINFO" -H "Content-Type:application/json" -X POST -d @$TMP $HOST/prov/v1/config/resource
+
+echo

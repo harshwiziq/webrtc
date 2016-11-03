@@ -1,0 +1,36 @@
+#!/bin/bash
+
+QUIET='-sS'
+CURL_OUTINFO='\r\n[ http-code: %{http_code} ]'
+BASENAME=`basename $0`
+DIR=`dirname $0`
+JQ=$DIR/../bin/jq-linux64
+TMP=/tmp/get-config.$$
+
+trap "rm -f $TMP;" SIGHUP SIGINT SIGTERM EXIT
+#set -e
+
+function usage {
+	echo Usage : $0 'options [ -h host ][ --help ]';
+	echo '      -h     : ip or FQDN for the api-backend server';
+	echo '      --help : print this help';
+	exit 1;
+}
+
+while [ $# -gt 0 ];
+do
+	[ "$1" == '--help' ] && { usage; }
+	[ "$1" == '-h' ] && { HOST=$2; shift; }
+
+	shift;
+done
+
+[ "$HOST" == "" ] && {
+		export HOST=http://localhost:2178;
+}
+
+curl $QUIET $USERPASSWORD -kL -w "$CURL_OUTINFO" -H "Content-Type: application/json" -X GET $HOST/landing/admin/config > $TMP
+[ "$(grep http-code $TMP | grep 200)" = "" ] && cat $TMP;
+[ "$(grep http-code $TMP | grep 200)" != "" ] && { cat $TMP | grep -v http-code | $JQ '.'; cat $TMP | grep http-code; }
+
+echo

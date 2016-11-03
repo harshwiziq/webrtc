@@ -1,0 +1,22 @@
+.navbar
+	ul.nav.nav-stacked.nav-justified.wb-controls-menu
+		li.colorpicker
+			a.color.dropdown-toggle(href='#',data-toggle='dropdown',title='Colors')
+				include ./images/picker.svg
+			ul.dropdown-menu(role='menu')
+				li
+					a(href='#')
+						.track
+		li
+			a.dropdown-toggle(href='#',data-toggle='dropdown',title='Strokes')
+				include ./images/brush.svg
+			ul.dropdown-menu.inverse-dropdown(role='menu')
+				li(data-name='pen')
+					a.stroke(href='#')	Pen
+				li(data-name='brush')
+					a.stroke(href='#')	Brush
+				li(data-name='highlighter')
+					a.stroke(href='#')	Highlighter
+		li
+			a.hand(href='#',title='Hand Tool,\nYou can also press shift while writing')
+				include ./images/hand.svg

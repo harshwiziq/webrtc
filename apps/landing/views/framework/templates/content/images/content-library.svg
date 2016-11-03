@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1 Basic//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11-basic.dtd">
+<svg version="1.1" baseProfile="basic"
+	 xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:a="http://ns.adobe.com/AdobeSVGViewerExtensions/3.0/"
+	 x="0px" y="0px" width="28px" height="28px" viewBox="-3.208 -3.512 28 28"
+	 overflow="visible" enable-background="new -3.208 -3.512 28 28" xml:space="preserve">
+<defs>
+</defs>
+<rect width="1" height="20.917"/>
+<rect x="21.145" y="0.493" width="1" height="20.917"/>
+<rect x="0.727" y="18.485" width="20.917" height="1"/>
+<rect x="1.789" y="4.275" width="3.903" height="1"/>
+<rect x="1.789" y="16.325" width="3.903" height="1"/>
+<rect x="2.319" y="6.518" width="2.842" height="8.526"/>
+<path d="M5.661,15.543H1.819V6.018h3.842V15.543z M2.819,14.543h1.842V7.018H2.819V14.543z"/>
+<rect x="6.374" y="4.255" width="3.865" height="1"/>
+<rect x="6.374" y="16.305" width="3.865" height="1"/>
+<rect x="6.904" y="6.498" width="2.842" height="8.526"/>
+<path d="M10.246,15.524H6.404V5.998h3.842V15.524z M7.404,14.524h1.842V6.998H7.404V14.524z"/>
+<line fill="#FFFFFF" x1="11.186" y1="6.358" x2="14.595" y2="4.537"/>
+<rect x="12.39" y="3.514" transform="matrix(0.4717 0.8818 -0.8818 0.4717 11.6139 -8.4885)" width="1" height="3.866"/>
+<line fill="#FFFFFF" x1="16.862" y1="16.986" x2="20.271" y2="15.166"/>
+<rect x="18.067" y="14.143" transform="matrix(0.4705 0.8824 -0.8824 0.4705 24.0167 -7.8713)" width="1" height="3.865"/>
+<rect x="14.314" y="6.473" transform="matrix(-0.8821 0.4711 -0.4711 -0.8821 34.6739 12.7931)" width="2.843" height="8.526"/>
+<path d="M16.286,15.842L11.797,7.44l3.39-1.811l4.488,8.402L16.286,15.842z M13.15,7.851l3.546,6.638l1.625-0.867l-3.545-6.639
+	L13.15,7.851z"/>
+</svg>

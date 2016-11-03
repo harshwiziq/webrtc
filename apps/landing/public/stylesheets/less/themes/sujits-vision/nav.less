@@ -1,0 +1,23 @@
+@import "./variables.less";
+@import "../../mixins/elements";
+
+/*
+ * Does'nt seem to work */
+svg path#Bounds {
+	fill : transparent;
+}
+
+#widget-nav {
+	svg,
+	svg path.shape  {
+		fill : @brand-primary;
+	}
+
+	li.disabled svg, 
+	li.disabled svg path.shape {
+		fill : @navbar-default-link-disabled-color;
+	}
+	li.enabled svg path.shape {
+		fill : @brand-warning;
+	}
+}

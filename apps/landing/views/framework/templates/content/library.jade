@@ -1,0 +1,29 @@
+.content-lib-outer(data-uuid=uuid)
+  .content-lib-upload
+    .content-upload-control
+      span.fileinput-button
+        span.content-upload-label Choose a File
+        input.content-upload-input(type="file", name="files[]")
+      div.status-div
+        span.content-upload-status
+        span.text-danger.content-upload-error.fa.fa-exclamation-triangle(style="display:none")
+          span
+        span.content-conversion-busy.fa.fa-circle-o-notch.fa-spin(style="display:none")
+
+      // Progress
+      .content-progress
+        .progress(style="width:100%; display:none;")
+          .progress-bar.progress-bar-striped.active(role="progressbar", aria-valuenow="0", aria-valuemin="0")
+            span
+
+  .content-lib-main(data-tab-anchor-id=tab_anchor_id)
+    .content-lib-header
+      span.content-lib-header-main Library 
+      span.content-lib-header-email #{email}
+      span.busy.fa.fa-circle-o-notch.fa-spin
+      span.text-danger.fa.fa-exclamation-triangle.content-lib-error(style='display: none;')
+      span.content-lib-header-subtitle
+    .content-lib-items
+      ul
+  .content-lib-blanket
+    //span Loading Document ...

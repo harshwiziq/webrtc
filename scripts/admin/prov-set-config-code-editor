@@ -1,0 +1,49 @@
+#!/bin/bash
+
+CURL_OPTIONS='-sS --post301 --post302 -kL'
+CURL_OUTINFO='\r\nHTTP CODE : %{http_code}'
+BASENAME=`basename $0`
+DIR=`dirname $0`
+JQ=$DIR/../bin/jq-linux64
+TEMPLATE=$DIR/templates/prov-set-code-editor
+TMP=/tmp/prov-set-code-editor$$
+
+trap "rm -f $TMP;" SIGHUP SIGINT SIGTERM EXIT
+#set -e
+
+function usage {
+	echo Usage : $0 '[ -h host ]';
+	echo '      -h                  : ip or fqdn of the provisioning server';
+	exit 1;
+}
+
+[ $# -lt 0 ] && { usage; }
+
+#
+# Defaults
+#
+REQ_TIMEOUT=10000
+
+
+while [ $# -gt 0 ];
+do
+	[ "$1" == '--update' ] && { UPDATE=y; }
+	[ "$1" == '--help' ]   && { usage; }
+	[ "$1" == '-h' ] && { HOST=$2; shift; }
+
+	shift;
+done
+
+#
+# Create the request body
+#
+cp $TEMPLATE $TMP
+cat $TMP | $JQ '.'
+
+[ "$HOST" == "" ] && {
+		export HOST=http://localhost:2178;
+}
+
+curl $CURL_OPTIONS -w "$CURL_OUTINFO" -H "Content-Type:application/json" -X POST -d @$TMP $HOST/prov/v1/config/resource
+
+echo

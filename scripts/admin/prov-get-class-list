@@ -1,0 +1,64 @@
+#!/bin/bash
+
+QUIET='-sS'
+CURL_OUTINFO='\r\n[ http-code: %{http_code} ]'
+BASENAME=`basename $0`
+DIR=`dirname $0`
+JQ=$DIR/../bin/jq-linux64
+TMP=/tmp/prov-get-class-list$$
+NODE_ARGS=
+RAW=no
+
+trap "rm -f $TMP;" SIGHUP SIGINT SIGTERM EXIT
+#set -e
+
+function usage {
+	echo Usage : $0 '[ options ]';
+	echo '      --raw      : (OPTIONAL) print JSON output';
+	echo ''
+	echo '  Time related options';
+	echo '      --utc      : (OPTIONAL) Show all times in UTC. Defaults to local time';
+	echo '      --relative : (OPTIONAL) Show times relative to (servers) now';
+	echo '      --reverse  : (OPTIONAL) Reverse the sense of any sorting applied';
+	echo ''
+	echo '      -h         : ip or FQDN for the provisioning server';
+	echo '      --help     : prints the usage';
+	exit 1;
+}
+
+while [ $# -gt 0 ];
+do
+	[ "$1" == '--raw' ]       && { RAW=yes; }
+	[ "$1" == '--dump' ]      && { DUMP=yes; }
+	[ "$1" == '--utc' ]       && { NODE_ARGS=$NODE_ARGS" $1"; }
+	[ "$1" == '--relative' ]  && { NODE_ARGS=$NODE_ARGS" $1"; }
+	[ "$1" == '--reverse' ]   && { NODE_ARGS=$NODE_ARGS" $1"; }
+	[ "$1" == '-h' ]          && { HOST=$2; shift; }
+	[ "$1" == '--help' ]      && { usage; }
+
+	shift;
+done
+
+[ "$HOST" == "" ] && {
+		export HOST=http://localhost:2178;
+}
+
+curl $QUIET $USERPASSWORD -kL -w "$CURL_OUTINFO" -H "Content-Type: application/json" -X GET $HOST/prov/v1/admin/sessions > $TMP;
+
+[ "$DUMP" == "yes" ] && { cp $TMP /tmp/dump-$$.json ; echo 'dump created @ /tmp/dump-'$$'.json'; }
+[ "$RAW" == "yes" ] && {
+	cat $TMP | sed 's@\[ http-code: [0-9]* \]@@g' | $JQ
+	cat $TMP | grep http-code;
+	exit;
+}
+
+#
+# Cooked output
+#
+
+#
+# curl $QUIET $USERPASSWORD -kL -w "$CURL_OUTINFO" -H "Content-Type: application/json" -X GET $HOST/prov/v1/admin/sessions | (cd helper-scripts; node prov-get-class-list $NODE_ARGS)
+#
+# Piping from stdin is broken (https://github.com/nodejs/node/issues/5927). Doing it the following way
+#
+cd helper-scripts; node prov-get-class-list --in_file $TMP $NODE_ARGS

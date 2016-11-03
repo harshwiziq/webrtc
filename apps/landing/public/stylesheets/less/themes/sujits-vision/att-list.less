@@ -1,0 +1,100 @@
+@import "./variables.less";
+@import "../../mixins/elements";
+
+@keyframes heartbeat {
+  0% {
+	fill : @brand-warning;
+    transform: scale(1.0, 1.0);
+  }
+  20% {
+	fill : @brand-danger;
+    transform: scale(1.2, 1.2);
+  }
+  100% {
+	fill : @brand-warning;
+    transform: scale(1.0, 1.0);
+  }
+}
+
+.atl-avatar-wrap svg {
+	fill : @brand-warning;
+	stroke : @brand-warning;
+}
+
+div.atl-username {
+	color : @brand-warning;
+}
+.atl-user-meta .atl-controls-bar {
+	.atl-audio-level {
+		border-left : solid 1px @brand-warning;
+		border-right : solid 1px @brand-warning;
+		border-bottom : solid 1px @brand-warning;
+
+		&:after {
+			color : @brand-warning;
+		}
+	}
+
+	.atl-audio-level .vu-meter {
+		& svg rect {
+			fill : fadeout(@brand-warning, 40%);
+			&.vu-4 {
+				fill : @brand-warning;
+			}
+			&.vu-5 {
+				fill : average(fadeout(@brand-warning, 10%), fadeout(@brand-danger, 10%));
+			}
+			&.vu-6 {
+				fill : fadeout(@brand-danger, 10%);
+			}
+			&.vu-7 {
+				fill : @brand-danger;
+			}
+		}
+	}
+
+	.atl-control {
+		fill : @gray;
+		transition : all .3s ease-out;
+		cursor : initial;
+
+		&.att-state-set {
+			fill : @brand-warning;
+		}
+
+		&.att-state-set.slashed {
+			fill : @brand-danger;
+		}
+
+		&.att-state-busy {
+			fill : @brand-warning;
+			animation: heartbeat 0.52s ease-in-out infinite;
+		}
+
+		&.att-state-busy.slashed {
+			fill : @brand-danger;
+			animation: heartbeat 0.52s ease-in-out infinite;
+		}
+
+		&:hover, &.slashed:hover {
+			transform : scale(0.9, 0.9);
+			margin-right : 5px;
+			margin-left : 5px;
+		}
+
+		&.read-only:hover, &.read-only.slashed:hover {
+			cursor : default;
+			margin-right : 0;
+			margin-left : 0;
+			transform : none;
+		}
+
+	}
+}
+
+/* Specifically disable hover action on vu-meters */
+.atl-audio-level:hover {
+	transform: none;
+	margin-left : initial;
+	margin-right : initial;
+}

@@ -1,0 +1,53 @@
+@import "variables.less";
+@import "fonts.less";
+
+.class-title {
+	margin-top: 30px;
+	margin-bottom: 29px;
+	width: 100%;
+	display: flex;
+	flex-direction: row;
+}
+
+.title-icon {
+	border-radius: 50%;
+	width: 58px;
+	height: 58px;
+	margin-left: 48px;
+	background-color: @green-bg;
+	display: flex;
+	align-items: center;
+
+	svg {
+		width: 50%;
+		height: 50%;
+		flex-grow: 1;
+		path.shape {
+			fill: @white;
+		}
+	}
+}
+
+.title-msg {
+	display: flex;
+	flex-direction: column;
+	margin-left: 17px;
+}
+
+.cls-name {
+	font-stretch: normal;
+	font-family: 'Roboto', 'sans-serif';
+	font-style: normal;
+	color: @brand-info;
+	font-size: 22px;
+	font-weight: normal;
+}
+
+.cls-info {
+  font-stretch: normal;
+  font-family: 'LatoWebLight', 'sans-serif';
+  font-style: normal;
+  color: @grey-light;
+  font-size: 14px;
+  font-weight: 300;
+}

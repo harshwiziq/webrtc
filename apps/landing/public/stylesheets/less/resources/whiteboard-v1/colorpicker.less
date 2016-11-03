@@ -1,0 +1,43 @@
+@import './theme';
+
+.colorpicker {
+	width: 40px;
+	height: 40px;
+	display: flex;
+
+	.track {
+		background:   #EFEFEF url(/landing/images/color-palette.png) no-repeat 50% 50%;	
+		height:       150px;
+		width:        150px;
+		margin-left:  110%;
+
+		display:      none;
+		cursor:       crosshair;
+		z-index:      10;
+	}
+
+	.color {
+		height: 100%;//inherit;
+		width: 100%;//inherit;
+		
+	}
+
+	.colorInner {
+		height: 50%; //20px
+		width: 33%;  //20px
+		min-width: 10px;
+		margin-left: 33%;	//20px
+		margin-top: 5%;	//8px
+		border-radius: 100%;		//10px;
+	
+	}
+
+	.dropdown {
+	
+		li {
+		
+		}
+	}
+}
+
+

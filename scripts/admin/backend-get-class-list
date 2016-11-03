@@ -1,0 +1,57 @@
+#!/bin/bash
+
+QUIET='-sS'
+CURL_OUTINFO='\r\n[ http-code: %{http_code} ]'
+BASENAME=`basename $0`
+DIR=`dirname $0`
+JQ=$DIR/../bin/jq-linux64
+TMP=/tmp/backend-get-class-list-$$
+NODE_ARGS=""
+
+trap "rm -f $TMP;" SIGHUP SIGINT SIGTERM EXIT
+#set -e
+
+function usage {
+	echo Usage : $0 '[ options ]';
+	echo ' '
+	echo '  Sorting and filtering related options'
+	echo '      --creation : (OPTIONAL) Sort by ascending order of creation time (default)';
+	echo '      --start    : (OPTIONAL) Sort by ascending order of start time';
+	echo '      --reverse  : (OPTIONAL) Reverse the sense of any sorting applied';
+	echo ' '
+	echo '  Time related options';
+	echo '      --utc      : (OPTIONAL) Show all times in UTC. Defaults to local time';
+	echo '      --relative : (OPTIONAL) Show times relative to (servers) now';
+	echo '      -h         : (OPTIONAL) IP or FQDN of the backend host';
+	echo '      --help     : show this help';
+	exit 1;
+}
+
+while [ $# -gt 0 ];
+do
+	[ "$1" == '--creation' ] && { NODE_ARGS=$NODE_ARGS" $1"; }
+	[ "$1" == '--start' ]    && { NODE_ARGS=$NODE_ARGS" $1"; }
+	[ "$1" == '--reverse' ]  && { NODE_ARGS=$NODE_ARGS" $1"; }
+	[ "$1" == '--utc' ]      && { NODE_ARGS=$NODE_ARGS" $1"; }
+	[ "$1" == '--relative' ] && { NODE_ARGS=$NODE_ARGS" $1"; }
+	[ "$1" == '-h' ]         && { HOST=$2; shift; }
+	[ "$1" == '--help' ]     && { usage; }
+
+	shift;
+done
+
+#
+# Check for mandatory parameters
+#
+
+[ "$HOST" == "" ] && {
+	export HOST=http://localhost:2178;
+}
+
+#
+# curl $QUIET $USERPASSWORD -kL -w "$CURL_OUTINFO" -H "Content-Type: application/json" -X GET $HOST/backend/admin/classes | (cd $DIR/helper-scripts; node get-class-list.js $NODE_ARGS)
+#
+# Piping from stdin is broken (https://github.com/nodejs/node/issues/5927). Doing it the following way
+#
+curl $QUIET $USERPASSWORD -kL -w "$CURL_OUTINFO" -H "Content-Type: application/json" -X GET $HOST/backend/admin/classes > $TMP
+(cd $DIR/helper-scripts; node get-class-list.js --in_file $TMP $NODE_ARGS)

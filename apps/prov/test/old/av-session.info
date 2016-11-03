@@ -1,0 +1,12 @@
+{
+	"name" : "av-tokbox-v2",
+		"role" : "av",
+		"custom" : { 
+			"apikey" : "45457782",
+			"apisecret" : "e5b2b08aba748e20b7cbedca4c878257c17b1634",
+			"p2p"	: false,
+			"chromelocalextensionid"	: "hmlfjgegnbjjhaacghlfekifkagkmbce",
+			"chromeextensionid"	: "cofnnopnhjmpoomoholnofbneelimjdm",
+			"inlinechromeextinstall" : false
+		}
+}

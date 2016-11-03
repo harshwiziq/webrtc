@@ -1,0 +1,83 @@
+@import "./variables.less";
+@import "./fonts.less";
+@import "./wiziq-bar.less";
+
+body {
+	background-color : @brand-danger;
+	font-family : @font-family-base;
+	font-weight  : 100;
+	color        : white;
+
+	.container {
+		margin : 0 50px 0 50px;
+	}
+}
+
+a {
+	color        : white;
+	font-weight  : 400;
+	text-decoration : none;
+
+	&:hover {
+		text-decoration : underline;
+	}
+}
+
+@bar-height : 30px;
+
+.wiziq-bar(@bar-height);
+.main {
+	height : 100vh;
+	position : absolute;
+	width : 100%;
+	top: @bar-height;
+
+	.picture, .message {
+		width : 50%;
+		height : 100%;
+		display : inline-block;
+		position : absolute;
+	}
+
+	.picture {
+		width : 30%;
+		svg {
+			position : absolute;
+			top : 50%;
+			transform : translateY(-50%);
+			right : 100px;
+		}
+	}
+
+	.message {
+		width : 70%;
+		left : 30%;
+		.middle {
+			position : absolute;
+			top : 50%;
+			transform : translateY(-50%);
+
+			p {
+				font-size : 1.5em;
+				margin-top : 5px;
+				margin-bottom : 5px;
+			}
+			p.large {
+				font-size : 4em;
+				font-weight : 400;
+			}
+			button {
+				height  : 46px;
+				width : 146px;
+				margin-top : 20px;
+				border : none;
+				background-color : white;
+				border-radius : 3px;
+				a {
+					color : @gray-darker;
+					font-size : 14px;
+				}
+			}
+		}
+	}
+}

@@ -1,0 +1,52 @@
+.content-player-outer(data-content-url=content_uri, data-is-shared=shared, data-uuid=uuid)
+	.content-loading-label
+		span Loading Document ...
+	.content-area
+	.content-menu
+		.navbar(role='navigation')
+			.nav-inner
+				.navbar-header
+					button.navbar-toggle(type='button', data-toggle='collapse', data-target='.navbar-collapse')
+						span.sr-only Toggle navigation
+						span.icon-bar
+						span.icon-bar
+						span.icon-bar
+				.navbar-collapse.collapse
+					ul.nav.navbar-nav
+						if false
+							li.content-layout-toggle
+								a.tooltip(href="javascript:void(0)")
+									include ../../classic-1/images/top-bar/layout2.svg
+									div.tooltip-content
+										div
+											span.tooltip-header Layout
+										div
+											span.tooltip-text Vertical, Single Column, Scrollable
+
+						li.content-page-nav(data-nav-direction="prev")
+							a.tooltip(href="javascript:void(0)")
+								span.fa.fa-step-backward
+								div.tooltip-content Previous
+
+						li.content-page-nav(data-nav-direction="next")
+							a.tooltip(href="javascript:void(0)")
+								span.fa.fa-step-forward
+								div.tooltip-content Next
+
+						li.content-library
+							a.tooltip(href="javascript:void(0)")
+								include images/content-library.svg
+								div.tooltip-content Library
+	.content-preview-menu
+		.navbar(role='navigation')
+			.nav-inner
+				.navbar-collapse.collapse
+					ul.nav.navbar-nav
+						li
+							span Preview
+						li.content-share
+							a(href="javascript:void(0)")
+								span.fa.fa-share-alt
+						li.content-preview-close
+							a(href="javascript:void(0)")
+								span.fa.fa-times

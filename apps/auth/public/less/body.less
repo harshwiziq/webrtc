@@ -1,0 +1,53 @@
+@import "variables.less";
+@import "fonts.less";
+@import "class-title.less";
+@import "social-auth.less";
+@import "wiziq-auth.less";
+
+.login-body {
+	max-width: 506px;
+	margin: 86px auto;
+	max-height: 605px;
+	background-color: @white;
+	display: flex;
+	flex-direction: column;
+}
+
+.anon {
+	display: flex;
+	flex-direction: row;
+	margin-top: auto;
+	margin-bottom: auto;
+	align-items: center;
+	justify-content: space-between;
+
+	&:hover {
+		cursor: pointer;
+		.guest {
+			color: @brand-primary;
+		}
+		svg {
+			polygon.shape {
+				fill: @brand-primary;
+			}
+		}
+	}
+
+	svg {
+		margin-right: 31px;
+		height: 18px;
+		polygon.shape {
+			fill: @arrow;
+		}
+	}
+}
+
+.guest {
+	margin-left: 30px;
+	font-stretch: normal;
+	font-family: 'Roboto', 'sans-serif';
+	font-style: normal;
+	color: @grey-light;
+	font-size: 18px;
+	font-weight: normal;
+}

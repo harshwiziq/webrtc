@@ -1,0 +1,301 @@
+{
+  "sess_id": "ttoj-160924.215707.869",
+  "class_id": "ttoj",
+  "start_time": "2016-09-24T16:27:02.000Z",
+  "duration": -1,
+  "attendees": {
+	  "max_attendees": 1999,
+	  "explicit_anon": null,
+	  "presenter_entry_before_time": true,
+	  "named": [
+		  {
+			  "id": "111",
+			  "auth_via": "wiziq",
+			  "role": "wiziq-presenter"
+		  },
+		  {
+			  "id": "avi",
+			  "auth_via": "private",
+			  "role": "wiziq-presenter"
+		  }
+	  ]
+  },
+  "resources": [
+    {
+      "_id": "57ca0b1670be6f72f79bc550",
+      "name": "av-tokbox-v2",
+      "custom": {
+        "apikey": "45457782",
+        "apisecret": "e5b2b08aba748e20b7cbedca4c878257c17b1634",
+        "p2p": false,
+        "chromelocalextensionid": "fsdfffffffffffffffffffd",
+        "chromeextensionid": "cofnnopnhjmpoomoholnofbneelimjdm",
+        "inlinechromeextinstall": false
+      },
+      "__v": 0,
+      "config": {
+        "name": "av-tokbox-v2",
+        "role": "av",
+        "display_name": "Audio/Video",
+        "display_spec": {
+          "widget": "av",
+          "templates": [
+            "av-tokbox",
+            "container"
+          ],
+          "css": [
+            "classic-1.min"
+          ]
+        },
+        "req_sess_info": true,
+        "custom": {
+          "limits": {
+            "startup": "all",
+            "max_videos": 5,
+            "max_audios": 20
+          },
+          "random_string": "welcome",
+          "screenshare": true,
+          "debug_controls": false,
+          "chromeextensionid": "cofnnopnhjmpoomoholnofbneelimjdm"
+        }
+      }
+    },
+    {
+
+      "_id": "57ca0b1670be6f72f79bc551",
+      "name": "whiteboard-v1",
+      "custom": {
+      },
+      "__v": 0,
+      "config": {
+        "name": "whiteboard-v1",
+        "display_name": "Whiteboard",
+        "req_sess_info": true,
+		"display_spec": {
+			"widget": "tabs",
+			"templates": ["main"],
+			"css": ["canvas.min"]
+		},
+		"custom": {
+			"consider_perms" : true
+		}
+      }
+    },
+    {
+      "_id": "57ca0a9e70be6f72f79bc54f",
+      "name": "chat-box",
+      "custom": {
+        "server_url": "https://prov-vcqa.wiziq.com/",
+        "req_timeout": "10000"
+      },
+      "__v": 0,
+      "config": {
+        "name": "chat-box",
+        "role": "chat",
+        "display_name": "Chat",
+        "req_sess_info": true,
+        "display_spec": {
+          "widget": "chat",
+          "templates": [
+            "chat-v1",
+            "message"
+          ],
+          "css": [
+            "chat-box.min"
+          ]
+        },
+        "custom": {}
+      }
+    },
+    {
+      "_id": "57ca0a9e70be6f72f79bc54g",
+      "name": "code-editor",
+      "custom": {
+        "languages"	:	[
+          {	"value" : "js",			"text": "Javascript"  },
+          {	"value" : "html",		"text": "HTML"        },
+          {	"value" : "css",		"text": "CSS"         }
+        ],
+        "themes"	:	[
+          {	"value"	:	"monokai",          "text"	:	"Monokai"         },
+          {	"value"	:	"solarized_dark",   "text"	:	"Solarized_Dark"  },
+          {	"value"	:	"chrome",           "text"	:	"Chrome"          },
+          {	"value"	:	"clouds",           "text"	:	"Clouds"          },
+          {	"value"	:	"clouds_midnight",  "text"	:	"Clouds Midnight" }
+        ],
+        "current_lang"	:	"js",
+        "current_theme"	:	"monokai",
+        "current_size"  :   12
+      },
+      "__v": 0,
+      "config": {
+        "name": "code-editor",
+        "role": "code-editor",
+        "display_name": "Editor",
+        "display_spec": {
+          "widget": "tabs",
+          "templates": [ "code-editor" ],
+          "css": [ "code-editor.min" ]
+        },
+        "custom": {}
+      }
+    },
+    {
+      "_id": "57ca0b6e70be6f72f79bc551",
+      "name": "content",
+      "custom": {
+        "view_api": "https://view-api.box.com/1/",
+        "sessionduration": 300,
+        "api_token_encrypted": "707756f8aab4b7bd258e0d4dab0611c816129d3d88bf73640ce292ab737a8dca630aaec4d27a4789f0eb76c9bfa70598367bed3da973a0e496b3b2d87aec27ff",
+        "thumbnails_dimensions": "128x128,256x256,216x216",
+        "s3_access_key": "0WATX2TYP6SVTPNM1W82",
+        "s3_secret_key_encrypted": "5c28092d29c33a0e3c313919bf24f7c8809f9d07434796c414d7a18f5795132556ceaa43f525d084e886d66e3f2a1a3562d8d7c914cef2b7d88ea46c4cb56ac1",
+        "bucket_name": "boxcontent",
+        "s3_key_name": "uploadcontent",
+        "content_server": "https://prov-vcqa.wiziq.com/cms/",
+        "s3_bucket_url": "https://boxcontent.s3.amazonaws.com/"
+      },
+      "__v": 0,
+      "config": {
+        "name": "content",
+        "role": "content",
+        "display_name": "Content",
+        "req_sess_info": true,
+        "display_spec": {
+          "widget": "tabs",
+          "templates": [
+            "player",
+            "library",
+            "library-item"
+          ],
+          "css": [
+            "content.min"
+          ]
+        },
+        "custom": {}
+      }
+    },
+	{
+		"name": "whiteboard-v1",
+		"config": {
+			"name": "whiteboard-v1",
+			"display_name": "Whiteboard",
+			"req_sess_info": true,
+			"display_spec": {
+				"widget": "tabs",
+				"templates": ["main"],
+				"css": ["canvas.min"]
+			},
+			"custom": {
+				"consider_perms" : true
+			}
+		}
+	}
+  ],
+  "perms": {
+    "default": {
+      "denied": {
+        "content": {
+          "library": {
+            "users": "user1"
+          }
+        },
+        "layout": {
+          "change": {
+            "users": "user1"
+          }
+        }
+      },
+      "allowed": {
+        "av-camera": {
+          "disable": {
+            "users": "self"
+          }
+        },
+        "av-microphone": {
+          "mute": {
+            "users": "self"
+          }
+        },
+        "content": {
+          "library": {
+            "users": "self"
+          }
+        },
+        "tab": {
+          "change": {
+            "users": "self"
+          },
+          "close": {
+            "users": "self"
+          }
+        },
+        "layout": {
+          "change": {
+            "users": "self"
+          }
+        },
+		"perms": {
+			"grant": {
+				"users": "*"
+			},
+			"immutable": {
+				"users": "*"
+			}
+		},
+		"write": {
+			"control":{
+				"users": "*"
+			}
+		}
+      }
+    },
+    "wiziq-presenter": {
+      "denied": {
+        "layout": {
+          "change": {
+            "users": "user1"
+          }
+        }
+      },
+      "allowed": {
+        "av-camera": {
+          "disable": {
+            "users": "*"
+          }
+        },
+        "av-microphone": {
+          "mute": {
+            "users": "*"
+          }
+        },
+        "content": {
+          "share": {
+            "users": "*"
+          },
+          "upload": {
+            "users": "*"
+          },
+          "library": {
+            "users": "*"
+          }
+        },
+        "tab": {
+          "close": {
+            "users": "*"
+          }
+        },
+        "layout": {
+          "change": {
+            "users": "*"
+          }
+        }
+      }
+    }
+  },
+  "common": {},
+  "git": null,
+  "docker": null,
+  "node": {}
+}

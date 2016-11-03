@@ -1,0 +1,62 @@
+@import "variables.less";
+@import "fonts.less";
+@import "input-box.less";
+
+.wiziq-auth {
+	img {
+		display: block;
+		margin: 30px auto;
+		height: 100px;
+	}
+}
+
+.wiziq-info {
+	margin-left: 50px;
+	text-align: left;
+	font-stretch: normal;
+	font-family: 'Roboto', 'sans-serif';
+	font-style: normal;
+	color: @brand-info;
+	font-size: 18px;
+	font-weight: normal;
+}
+
+form {
+	margin-top: 22px;
+}
+
+.input-container {
+	position: relative;
+	margin: 0 auto;
+	max-width: 447px;
+
+	.user-container, .pass-container {
+		position: relative;
+	}
+	.pass-container {
+		margin-top: 11px;
+	}
+	.input-box;
+}
+
+input[type=text]:focus, input[type=text]:valid {
+	border: solid 1px rgba(0,132,200, 0.5);
+	& + label {
+		.focussed
+	}
+}
+
+.forgot-password {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: center;
+	span {
+		font-stretch: normal;
+		font-family: 'Roboto', 'sans-serif';
+		font-style: normal;
+		color: @grey-light;
+		font-size: 14px;
+		font-weight: normal;
+	}
+}

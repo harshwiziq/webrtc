@@ -1,0 +1,8 @@
+{
+	"name" 	 : "chat-box",
+	"role"   : "chat",
+	"custom" : {
+		"server_url" : "https://__CHAT_SERVER/",
+		"req_timeout": "__REQ_TIMEOUT"
+	} 
+}

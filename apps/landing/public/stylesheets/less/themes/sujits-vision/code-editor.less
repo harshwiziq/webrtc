@@ -1,0 +1,26 @@
+@import "./variables.less";
+@import "../../mixins/elements";
+
+.code-editor-menu {
+	svg,
+	svg path.shape  {
+		fill : @brand-primary;
+	}
+	li.disabled svg, 
+	li.disabled svg path.shape {
+		fill : @navbar-default-link-disabled-color;
+	}
+	li.enabled svg path.shape {
+		fill : @brand-warning;
+	}
+	li.editor-icon:hover {
+		a.dropdown-toggle {
+			color : @brand-primary;
+			cursor : pointer;
+		}
+		ul.dropdown-menu > li > a:focus,
+		ul.dropdown-menu > li > a:hover {
+			color : @brand-primary;
+		}
+	}
+}

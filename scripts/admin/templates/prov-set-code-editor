@@ -1,0 +1,20 @@
+{
+	"name"	:	"code-editor",
+	"custom"	:	{
+		"languages"	:	[
+			{	"value" : "js",			"text": "Javascript"  },
+			{	"value" : "html",		"text": "HTML"        },
+			{	"value" : "css",		"text": "CSS"         }
+		],
+		"themes"	:	[
+			{	"value"	:	"monokai",          "text"	:	"Monokai"         },
+			{	"value"	:	"solarized_dark",   "text"	:	"Solarized_Dark"  },
+			{	"value"	:	"chrome",           "text"	:	"Chrome"          },
+			{	"value"	:	"clouds",           "text"	:	"Clouds"          },
+			{	"value"	:	"clouds_midnight",  "text"	:	"Clouds Midnight" }
+		],
+		"current_lang"	:	"js",
+		"current_theme"	:	"monokai",
+		"current_size"  :   12
+	}
+}

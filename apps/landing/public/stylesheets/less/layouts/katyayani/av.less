@@ -1,0 +1,68 @@
+@import "./variables.less";
+@import "./mixins.less";
+
+.aspect-ratio(@width, @height) {
+  position: relative;
+  &:before {
+    display: block;
+    content: "";
+    width: 100%;
+    padding-top: (@height / @width) * 100%;
+  }
+  > #av-wrap {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+  }
+}
+
+#widget-av {
+	margin-top:   @nav-height + @gutter-eastwest;
+	margin-left:  @padding-side;
+	margin-right: @gutter-northsouth / 2;
+	position:     absolute;
+	left:         0;
+	padding:      0px;
+
+	.main-inner {
+		width: 100%;
+		height: 100%;
+	}
+
+	.menu-outer {
+		height : @av-menu-height;
+	}
+
+	#av-ot-screenshare-wrap {
+		width: 100%;
+		height: 100%;
+	}
+}
+
+.set-av-size(@width, @height) {
+	#widget-av {
+		width      : @width;
+		height     : @height;
+	}
+
+	body.av-fullscreen #widget-av {
+		width       : 100vw;
+		height      : 100vh;
+		margin      : 0;
+		top         : 0;
+		left        : 0;
+	}
+	body.av-tiled #widget-av {
+		width       : 100%;
+		height      : calc(~'100% - @{nav-height-effective}');
+		margin-right: @padding-side;
+		margin-bottom:   @margin-bottom;
+		margin-left : @nav-height;
+		margin-top : @nav-height + 8px;
+
+		.main-inner {
+		}
+	}
+}

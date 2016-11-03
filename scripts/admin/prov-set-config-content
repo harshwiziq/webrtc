@@ -1,0 +1,52 @@
+#!/bin/bash
+
+CURL_OPTIONS='-sS --post301 --post302 -kL'
+CURL_OUTINFO='\r\nHTTP CODE : %{http_code}'
+BASENAME=`basename $0`
+DIR=`dirname $0`
+JQ=$DIR/../bin/jq-linux64
+TEMPLATE=$DIR/templates/prov-set-content
+TMP=/tmp/prov-set-content$$
+
+trap "rm -f $TMP;" SIGHUP SIGINT SIGTERM EXIT
+#set -e
+
+function usage {
+	echo Usage : $0 'options [ -h host ]';
+	echo '  options can be a sequence of the following:';
+	echo '      --server (MANDATORY) : ip or FQDN of the content server';
+	echo '      --update             : update existing configuration';
+	exit 1;
+}
+
+[ $# -lt 1 ] && { usage; }
+
+while [ $# -gt 0 ];
+do
+	[ "$1" == '--server' ] && { CMS_ADDRESS=$2; shift; }
+	[ "$1" == '--update' ] && { UPDATE=y; }
+	[ "$1" == '-h' ] && { HOST=$2; shift; }
+
+	shift;
+done
+
+#
+# Check for Mandatories
+#
+[ "$CMS_ADDRESS" == "" ] && usage;
+
+#
+# Create the request body
+#
+cp $TEMPLATE $TMP
+sed -i "s@__CMS_URI@$CMS_ADDRESS@g" $TMP
+cat $TMP | $JQ '.'
+
+[ "$HOST" == "" ] && {
+		export HOST=http://localhost:2178;
+}
+
+[ "$UPDATE" == "y" ] || curl $CURL_OPTIONS -w "$CURL_OUTINFO" -H "Content-Type:application/json" -X POST -d @$TMP $HOST/prov/v1/config/resource
+[ "$UPDATE" == "y" ] && curl $CURL_OPTIONS -w "$CURL_OUTINFO" -H "Content-Type:application/json" -X PUT -d @$TMP $HOST/prov/v1/config/resource/content
+
+echo

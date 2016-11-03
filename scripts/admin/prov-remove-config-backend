@@ -1,0 +1,37 @@
+#!/bin/bash
+
+CURL_OPTIONS='-sS --post301 --post302 -kL'
+CURL_OUTINFO='\r\nHTTP CODE : %{http_code}'
+BASENAME=`basename $0`
+DIR=`dirname $0`
+JQ=$DIR/../bin/jq-linux64
+
+trap "rm -f $TMP;" SIGHUP SIGINT SIGTERM EXIT
+#set -e
+
+function usage {
+	echo Usage : $0 '[ -h host ]';
+	echo '      --help           : print this help';
+	exit 1;
+}
+
+[ $# -lt 0 ] && { usage; }
+
+while [ $# -gt 0 ];
+do
+	[ "$1" == '--help' ] && usage;
+	[ "$1" == '-h' ] && { HOST=$2; shift; }
+
+	shift;
+done
+
+#
+# Check for Mandatories
+#
+[ "$HOST" == "" ] && {
+		export HOST=http://localhost:2178;
+}
+
+curl $CURL_OPTIONS -w "$CURL_OUTINFO" -H "Content-Type: application/json" -X DELETE -d @$TMP $HOST/prov/v1/config/backend
+
+echo

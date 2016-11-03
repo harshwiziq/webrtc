@@ -1,0 +1,33 @@
+#!/bin/bash
+
+. common.sh
+BASENAME=`basename $0`
+QUIET=-sS
+#
+#
+# Update Subscription
+#
+
+function usage {
+	echo Usage : $BASENAME 'protocol host-name port [ -h host [ -p user:password ] [ options ]';
+	exit 1;
+}
+
+[ $# -lt 3 ] && { usage; }
+HOST_PROTO=$1; shift;
+HOST_NAME=$1; shift;
+HOST_PORT=$1; shift;
+
+[ "$USERPASSWORD" != "" ] && { USERPASSWORD='-u '$USERPASSWORD; }
+[ "$HOST" == "" ] && {
+		export HOST=http://localhost:2178;
+}
+
+curl $QUIET $USERPASSWORD -k -H "Content-Type: application/json" -X POST -d '{
+	"name"     : "backend",
+	"protocol" : "'"$HOST_PROTO"'",
+	"host"     : "'"$HOST_NAME"'",
+	"port"     : "'"$HOST_PORT"'"
+}' $HOST/prov/api/provisioning/v1/config/backend
+
+echo

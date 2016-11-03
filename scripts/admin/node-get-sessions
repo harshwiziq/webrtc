@@ -1,0 +1,71 @@
+#!/bin/bash
+
+QUIET='-sS'
+CURL_OUTINFO='\r\n[ http-code: %{http_code} ]'
+BASENAME=`basename $0`
+DIR=`dirname $0`
+JQ=$DIR/../bin/jq-linux64
+TMP=/tmp/node-get-sessions-$$
+NODE_ARGS=
+RAW=no
+
+trap "rm -f $TMP;" SIGHUP SIGINT SIGTERM EXIT
+#set -e
+
+function usage {
+	echo Usage : $0 '[ options ]';
+	echo '      --raw      : (OPTIONAL) print JSON output';
+	echo ' '
+	echo '  Sorting and filtering related options'
+	echo '      --start    : (OPTIONAL) Sort by ascending order of start time (default)';
+	echo '      --finish   : (OPTIONAL) Sort by ascending order of finish time';
+	echo '      --reverse  : (OPTIONAL) Reverse the sense of any sorting applied';
+	echo ' '
+	echo '  Time related options';
+	echo '      --utc      : (OPTIONAL) Show all times in UTC. Defaults to local time';
+	echo '      --relative : (OPTIONAL) Show times relative to (servers) now';
+	echo ' '
+	echo '      -h         : ip or FQDN for the provisioning server';
+	echo '      --help     : prints the usage';
+	exit 1;
+}
+
+while [ $# -gt 0 ];
+do
+	case "$1" in
+		'--raw')
+			RAW=yes;
+			;;
+
+		'-h')
+			HOST=$2; shift;
+			;;
+
+		'--help')
+			usage;
+			;;
+
+		*)
+			NODE_ARGS=$NODE_ARGS" $1";
+			;;
+	esac
+
+	shift;
+done
+
+[ "$HOST" == "" ] && {
+		export HOST=http://localhost:2178;
+}
+
+curl $QUIET $USERPASSWORD -kL -w "$CURL_OUTINFO" -H "Content-Type: application/json" -X GET $HOST/agent/session/v1/ > $TMP;
+
+[ "$RAW" == "yes" ] && {
+	cat $TMP | sed 's@\[ http-code: [0-9]* \]@@g' | $JQ
+	cat $TMP | grep http-code;
+	exit;
+}
+
+#
+# Cooked output
+#
+cd helper-scripts; node node-get-sessions --in_file $TMP $NODE_ARGS

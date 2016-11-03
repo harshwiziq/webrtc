@@ -1,0 +1,10 @@
+div#av-modal(data-remodal-id='browser-extension-download')
+	button.remodal-close(data-remodal-action='close')
+	include images/screenshare.svg
+	div.remodal-ss-header
+		p You need to download the browser extension first... 
+	div.remodal-ss-footer
+		p Click on the download button to get the Screenshare extension. Please note that a page refresh is required after the extension is intalled successfully.
+	a(href='chromeSSExtPath' target='_blank' style='text-decoration:none;')
+		button.remodal-confirm() Download Extension
+	button.remodal-cancel(data-remodal-action='cancel') Do not share my screen

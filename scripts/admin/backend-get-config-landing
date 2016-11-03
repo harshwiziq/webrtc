@@ -1,0 +1,38 @@
+#!/bin/bash
+
+QUIET='-sS'
+CURL_OUTINFO='\r\n[ http-code: %{http_code} ]'
+BASENAME=`basename $0`
+DIR=`dirname $0`
+JQ=$DIR/../bin/jq-linux64
+TMP=/tmp/backend-get-config-landing$$
+
+trap "rm -f $TMP;" SIGHUP SIGINT SIGTERM EXIT
+#set -e
+
+function usage {
+	echo Usage : $0 '[ options ]';
+	echo '      --name : profile name';
+	echo '      -h     : IP or FQDN of the backend host';
+	echo '      --help : show this help';
+	exit 1;
+}
+
+while [ $# -gt 0 ];
+do
+	[ "$1" == '--name' ] && { PROFILE_NAME=$2; shift; }
+	[ "$1" == '-h' ] && { HOST=$2; shift; }
+	[ "$1" == '--help' ] && { usage; }
+
+	shift;
+done
+
+[ "$HOST" == "" ] && {
+	export HOST=http://localhost:2178;
+}
+
+curl $QUIET $USERPASSWORD -kL -w "$CURL_OUTINFO" -H "Content-Type: application/json" -X GET $HOST/backend/admin/profile/landing/$PROFILE_NAME > $TMP
+[ "$(grep http-code $TMP | grep 200)" = "" ] && cat $TMP;
+[ "$(grep http-code $TMP | grep 200)" != "" ] && { cat $TMP | grep -v http-code | $JQ '.'; cat $TMP | grep http-code; }
+
+echo

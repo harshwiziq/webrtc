@@ -1,0 +1,59 @@
+.code-editor-outer(data-uuid=uuid)
+	.shared-code-editor
+	.navbar.navbar-default.code-editor-menu(role="navigation")
+		ul.nav.navbar-nav
+			li.editor-icon.pull-left.disabled
+				a.tooltip.file-open(href="javascript:void(0)")
+					include images/open.svg
+					div.tooltip-content.top Open
+				input.file-open(type = "file")
+			li.editor-icon.pull-left
+				a.tooltip.file-save(href="javascript:void(0)")
+					include images/save.svg
+					div.tooltip-content.top Save
+			li.editor-icon.dropup.disabled
+				a.tooltip.dropdown-toggle(data-toggle="" href="javascript:void(0)")
+					include images/mode.svg
+					span.caret
+					div.tooltip-content.top Language
+				ul.dropdown-menu(role="menu")
+					-for (var x=0; x<languages.length; x++) 
+						li
+							a.editor-mode(href="javascript:void(0)" value="#{languages[x].value}") #{languages[x].text}
+			li.editor-icon.disabled
+				a.tooltip.undo(href="javascript:void(0)")
+					include images/undo.svg
+					div.tooltip-content.top Undo
+			li.editor-icon.disabled
+				a.tooltip.redo(href="javascript:void(0)")
+					include images/redo.svg
+					div.tooltip-content.top Redo
+			li.editor-icon.dropup.pull-right
+				a.tooltip.font-size.dropdown-toggle(data-toggle="dropdown" href="javascript:void(0)")
+					include images/font-size.svg
+					span.caret
+					div.tooltip-content.top Size
+				ul.dropdown-menu(role="menu")
+					li
+						a.editor-font-size(href="javascript:void(0)") 12
+					li
+						a.editor-font-size(href="javascript:void(0)") 14
+					li
+						a.editor-font-size(href="javascript:void(0)") 16
+					li
+						a.editor-font-size(href="javascript:void(0)") 18
+					li
+						a.editor-font-size(href="javascript:void(0)") 20
+					li
+						a.editor-font-size(href="javascript:void(0)") 22
+					li
+						a.editor-font-size(href="javascript:void(0)") 24
+			li.editor-icon.dropup.pull-right
+				a.tooltip.theme.dropdown-toggle(data-toggle="dropdown" href="javascript:void(0)")
+					include images/theme.svg
+					span.caret
+					div.tooltip-content.top Theme
+				ul.dropdown-menu(role="menu")
+					-for (var x=0; x<themes.length; x++) 
+						li
+							a.editor-theme(href="javascript:void(0)" value="#{themes[x].value}") #{themes[x].text}

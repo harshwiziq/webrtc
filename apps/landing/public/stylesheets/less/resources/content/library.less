@@ -1,0 +1,138 @@
+@import "variables.less";
+
+@library-header-height: 20px;
+@padding-top: 10px;
+@padding-bottom: 10px;
+@margin-lib-header-bottom : 10px;
+
+.content-lib-main {
+	top : calc(~'100% - @{library-height}');
+	height : @library-height;
+	background : #eee;
+	padding-left : 20px;
+	padding-top : @padding-top;
+	padding-bottom : @padding-bottom;
+	padding-right : 20px;
+}
+
+.content-lib-header {
+	height : @library-header-height;
+	line-height : @library-header-height;
+	margin-bottom : @margin-lib-header-bottom;
+
+	span.content-lib-header-main {
+		font-weight: bold;
+		color: #666;
+	}
+	span.content-lib-header-email,
+	span.content-lib-header-subtitle {
+		font-size : x-small;
+		font-weight: lighter;
+		color : #999;
+		margin-right : 5px;
+	}
+
+	span.content-lib-error:before {
+		margin-left : 10px;
+		margin-right : 10px;
+	}
+}
+
+@ul-height: @library-height - @library-header-height - @margin-lib-header-bottom - @padding-top - @padding-bottom;
+
+.content-lib-items {
+	height: @ul-height;
+	position : relative;
+	padding: 0;
+
+	ul {
+		display: block;
+		overflow-y: hidden;
+		height: @ul-height - 10px; // Height of the scroll bar
+		max-height: @ul-height;
+		white-space: nowrap;
+		margin: 0;
+		padding: 0;
+
+		li {
+			display: inline-block;
+			height : 100%;
+			width : @ul-height * .75; // Approx A4 dimension
+			margin-right: 20px;
+
+		}
+	}
+}
+
+.content-item-container {
+	height : 100%;
+	padding-bottom : 30px;
+	padding-top : 5px;
+}
+
+.content-item-type-icon {
+	position: relative;
+	top: -40px;
+	left: 0;
+	width: 40px;
+	height: 40px;
+	border-radius: 0%;
+
+	background-image: url('/landing/images/content-type-icons/unknown-2.png');
+	background-size : contain;
+	background-repeat : no-repeat;
+	background-position : center;
+
+	&[data-content-type="application/pdf"] {
+		background-image: url('/landing/images/content-type-icons/pdf.png');
+	}
+	&[data-content-type="text/csv"] {
+		background-image: url('/landing/images/content-type-icons/ms-excel.png');
+	}
+	&[data-content-type="application/vnd.ms-powerpoint"],
+	&[data-content-type="application/vnd.openxmlformats-officedocument.presentationml.presentation"] {
+		background-image: url('/landing/images/content-type-icons/ms-ppt.png');
+	}
+	&[data-content-type="application/msword"],
+	&[data-content-type="application/vnd.openxmlformats-officedocument.wordprocessingml.document"] {
+		background-image: url('/landing/images/content-type-icons/ms-word.png');
+	}
+}
+
+.content-item-thumbnail {
+	height: 100%;
+	padding-top: 39px;
+	padding-bottom: 10px;
+	background: white;
+	border : 5px solid transparent;
+
+	&:hover, & svg:hover {
+		cursor : pointer;
+	}
+
+	.tab-pane.content-loading &:hover,
+	.tab-pane.content-loading & svg :hover {
+		cursor: default;
+	}
+
+	img {
+		height : 100%;
+		width : 100%;
+	}
+
+	svg {
+		display: block;
+		margin: auto auto;
+		margin-right: auto;
+		height: 60%;
+		width: 60%;
+	}
+}
+
+.content-item-name {
+	position: relative;
+	top: -40px;
+	overflow-x: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}

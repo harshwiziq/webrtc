@@ -1,0 +1,43 @@
+{
+	"name" 	 : "recording",
+	"role"   : "recording",
+	"custom" : {
+		"storage_type" : "azure",
+		"acc_config" : {
+			"client_id"       : "__CLIENT_ID__",
+			"secret_id"       : "__SECRET_ID__",
+			"tenant_id"       : "__TENANT_ID__",
+			"subscription_id" : "__SUBSCRIPTION_ID__"
+		},
+		"vm_config" : {
+			"location"            : "__LOCATION__",
+			"resource_group_name" : "__RESOURCE_GROUP__",
+			"user"                : "__USER__",
+			"password"            : "__PASSWORD__",
+			"os" : {
+			   "publisher" : "Canonical",
+			   "offer"     : "UbuntuServer",
+			   "sku"       : "14.04.4-LTS",
+			   "os_type"   : "Linux",
+			   "image_uri" : "__OS_IMAGE_URI__"
+			},
+			"storage" : {
+				"type" : "__STORAGE_TYPE__"
+			},
+			"vm_network" : {
+			   "dns"   : [ "__DNS1__", "__DNS2__" ]
+			}
+		},
+		"store" : {
+			"type" : "azure-blob",
+			"custom_info" : {
+				"azure_strg_name" : "__AZURE_STRG_NAME__",
+				"azure_strg_key"  : "__AZURE_STRG_KEY__",
+				"container_id"   : "__CONTAINER_ID__"
+			}
+		},
+		"wiziq_endpoints" : {
+			"status_url" : "__WIZIQ_STATUS_URL__"
+		}
+	}
+}

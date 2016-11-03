@@ -1,0 +1,76 @@
+#!/bin/bash
+
+CURL_OPTIONS='-sS --post301 --post302 -kL'
+CURL_OUTINFO='\r\nHTTP CODE : %{http_code}'
+BASENAME=`basename $0`
+DIR=`dirname $0`
+JQ=$DIR/../bin/jq-linux64
+TEMPLATE=$DIR/templates/prov-acquire-node
+TMP=/tmp/prov-acquire-node$$
+REINIT=
+
+trap "rm -f $TMP;" SIGHUP SIGINT SIGTERM EXIT
+#set -e
+
+function usage {
+	echo Usage : $0 'options [ -h prov-host ]';
+	echo '  options can be a sequence of the following:';
+	echo '      --id    (MANDATORY) : id or nick-name for the node';
+	echo '      --host  (MANDATORY) : ip or FQDN for the node';
+	echo '      --proto (MANDATORY) : protocol (http | https)';
+	echo '      --port  (MANDATORY) : port';
+	echo '  or';
+	echo '      --reinit            : try to reacquire already configured nodes';
+	echo '';
+	echo '      -h                  : ip or fqdn of the provisioning server';
+	exit 1;
+}
+
+[ $# -lt 1 ] && { usage; }
+
+while [ $# -gt 0 ];
+do
+	[ "$1" == '--id' ] && { ID=$2; shift; }
+	[ "$1" == '--host' ] && { NODE_ADDRESS=$2; shift; }
+	[ "$1" == '--proto' ] && { PROTOCOL=$2; shift; }
+	[ "$1" == '--port' ] && { PORT=$2; shift; }
+	[ "$1" == '--reinit' ] && { REINIT='y'; }
+	[ "$1" == '-h' ] && { HOST=$2; shift; }
+
+	shift;
+done
+
+#
+# Check for Mandatories
+#
+[ "$REINIT" == "" ] && {
+	[ "$ID" == "" ] && usage;
+	[ "$NODE_ADDRESS" == "" ] && usage;
+	[ "$PROTOCOL" == "" ] && usage;
+	[ "$PORT" == "" ] && usage;
+}
+
+#
+# Create the request body
+#
+cp $TEMPLATE $TMP
+[ "$REINIT" == "" ] && {
+	sed -i 's@/ID/@'$ID'@g' $TMP
+	sed -i 's@/HOST/@'$NODE_ADDRESS'@g' $TMP
+	sed -i 's@/PROTOCOL/@'$PROTOCOL'@g' $TMP
+	sed -i 's@/PORT/@'$PORT'@g' $TMP
+	cat $TMP | $JQ '.'
+}
+
+[ "$HOST" == "" ] && {
+		export HOST=http://localhost:2178;
+}
+
+[ "$REINIT" == "" ] && {
+	curl $CURL_OPTIONS -w "$CURL_OUTINFO" -H "Content-Type: application/json" -X POST -d @$TMP $HOST/prov/v1/config/node;
+}
+[ "$REINIT" == "" ] || {
+	curl $CURL_OPTIONS -w "$CURL_OUTINFO" -H "Content-Type: application/json" -X POST $HOST/prov/v1/config/node/re-init;
+}
+
+echo

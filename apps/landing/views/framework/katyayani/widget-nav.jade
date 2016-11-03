@@ -1,0 +1,76 @@
+#widget-nav.vc-widget.navbar.navbar-default(role='navigation')
+	.nav-inner
+		.navbar-header
+			button.navbar-toggle(type='button', data-toggle='collapse', data-target='.navbar-collapse')
+				span.sr-only Toggle navigation
+				span.icon-bar
+				span.icon-bar
+				span.icon-bar
+			.navbar-brand
+				a.brand(href='javascript:void(0)')
+					img.img-responsive(src='/landing/images/katyayani/svg/negative-logo.svg')
+			.title
+				.title-inner
+					span #{title}
+		.navbar-collapse.collapse
+			ul.nav.navbar-nav.navbar-right
+				li#av
+					ul
+						li.av-recording.av-menu-toggle.disabled(style="display:none;")
+							a#av-menu-recording.av-menu-item.tooltip
+								include images/top-bar/recording-2.svg
+								div.tooltip-content Recording
+						li.av.av-menu-toggle.disabled
+							a#av-menu-audio-mute.av-menu-item.tooltip.text-danger
+								include images/top-bar/muted.svg
+								div.tooltip-content Microphone off
+							a#av-menu-audio-unmute.av-menu-item.tooltip(style="display: none;")
+								include images/top-bar/mic.svg
+								div.tooltip-content Microphone on
+						li.av.av-menu-toggle.disabled
+							a#av-menu-video-mute.av-menu-item.tooltip.text-danger
+								include images/top-bar/disabled-webcam.svg
+								div.tooltip-content Camera off
+							a#av-menu-video-unmute.av-menu-item.tooltip(style="display: none;")
+								include images/top-bar/webcam.svg
+								div.tooltip-content Camera on
+				li#layout
+					a.tooltip(href='#')
+						include images/top-bar/view-mode-1.svg
+						include images/top-bar/view-mode-fullscreen.svg
+						include images/top-bar/view-mode-tiled.svg
+						div.tooltip-content Layout Change
+				li#chat.enabled
+					a.tooltip(href='#')
+						include images/top-bar/chat.svg
+						div.tooltip-content Chat
+						div.counter(style="display:none;")
+							span
+				li#nav-screenshare.disabled
+					a.off.tooltip(href='#')
+						include images/top-bar/screenshare.svg
+						div.tooltip-content Screenshare
+					a.on.tooltip.text-danger(href='#')
+						include images/top-bar/disconnect.svg
+						div.tooltip-content Screenshare is on
+				li#nav-recording(class="disabled", style="display:none")
+					a.tooltip(href='#')
+						include images/top-bar/recording.svg
+						div.tooltip-content Recording
+				li#nav-attendees
+					a.tooltip(href='#')
+						include images/top-bar/users.svg
+						div.tooltip-content People
+				li#self
+					if photo
+						img(src=photo)
+					else
+						include images/top-bar/user.svg
+					.text
+						span.name #{name}
+						span.role #{role}
+				li#separator
+				li#signout
+					a.tooltip(href='#')
+						include images/signout3.svg
+						div.tooltip-content Sign Out

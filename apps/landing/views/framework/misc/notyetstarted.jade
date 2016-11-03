@@ -1,0 +1,71 @@
+doctype html
+html
+	head
+		title= title
+		link(href='/landing/stylesheets/less/site/katyayani/notyetstarted.min.css', rel='stylesheet' )
+		script(src='/landing/javascripts/framework/ext/require.js', data-main='/landing/javascripts/framework/misc/notyetstarted/init', type='text/javascript' )
+	body
+		.container
+			.main
+				.logo-outer
+					include images/negative-logo.svg
+				.msg-outer
+					p The session
+					h4 #{backend_config.class_config.meta_info.title}
+					p will start
+					h2.secondary
+					p.countdown
+					.loading(style="display:none;")
+						include images/loading.svg
+
+		.wrapper.row2(style="display:none;")
+			#container.clear
+				section#fof.clear
+					.hgroup
+						if (sess_config.state === 'scheduled' || sess_config.state === 'started')
+							h1.main This class will start
+							h2.secondary ...
+						else
+							h1.main Class not scheduled
+							h2 #{backend_config.class_config.status}/#{sess_config.state}
+
+						p.label
+							span.scheduled_time.data_value ...
+
+					// Details
+
+					table.details
+						thead
+							tr
+								th Key
+								th Value
+						tbody
+							tr
+								td Status
+								td.text-danger #{backend_config.class_config.status}/#{sess_config.state}
+							tr
+								td Class ID
+								td #{backend_config.class_config.class_id}
+							tr
+								td Title 
+								td #{backend_config.class_config.meta_info.title}
+							tr
+								td Duration
+								td.duration
+							tr
+								td Countdown
+								td.countdown
+							tr
+								td Estimated Server Time
+								td.server_time
+							tr
+								td Local Time
+								td.local_time
+							tr
+								td Estimated Clock Offset
+								td.clock_offset
+
+		script(type="text/javascript")
+			|var backend_config =  !{JSON.stringify(backend_config)};
+			|var sess_config    =  !{JSON.stringify(sess_config)};
+			|var server_time    = "!{server_time)";

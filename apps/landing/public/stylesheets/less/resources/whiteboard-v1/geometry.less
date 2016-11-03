@@ -1,0 +1,74 @@
+/* ------------------------------
+ *
+ * Handles the placement of items
+ * and colors as well (needs clean-up!)
+ *
+ * ------------------------------ */
+
+@import '../../mixins/elements.less';
+@images: "/landing/images";
+
+.wb-outer {
+	width: 100%;
+	height: 100%;
+
+	.wb-drawing-area {
+		float: left;
+		width: 100%;
+		height: inherit;
+
+		canvas {
+			background : white;
+		}
+
+		canvas[resize] {
+			width: 100%;
+			height: 100%;
+			max-height: 3000px;
+			max-width: 3000px;
+		}
+	}
+	.wb-controls-area {
+		width: 40px;
+		position: absolute;
+
+		a {
+			padding: 8px;
+		}
+		.navbar {
+			margin-top:      0px;
+			margin-bottom:   0px;
+
+			& > ul.nav > li {
+				display:          block;
+				width:            52px;
+				height:           52px;
+				margin:           0px auto;
+				.drop-shadow(0px, 2px, 12px, .1);
+			}
+		}
+		.track {
+				background:   #EFEFEF url(/landing/images/color-palette.png) no-repeat 50% 50%;	
+				height:       150px;
+				width:        150px;
+			
+				display:      none;
+				cursor:       crosshair;
+				z-index:      10;
+		}
+	}
+}
+
+.cursor-to-grab {
+	cursor: grab;
+	cursor: -webkit-grab;
+	cursor: -moz-grab;
+}
+.cursor-to-grab:active {
+	cursor: grabbing;
+	cursor: -webkit-grabbing;
+	cursor: -moz-grabbing;
+}
+.cursor-to-pen {
+	cursor: url(/landing/images/pen.png) 4 28, crosshair;
+}

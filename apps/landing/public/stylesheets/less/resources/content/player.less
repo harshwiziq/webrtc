@@ -1,0 +1,45 @@
+@import "variables.less";
+
+.content-player-outer {
+	position: absolute;
+	top     : 5px; // to allow for a border at the top
+	width   : 100%;
+	height  : 100%;
+	margin  : 0;
+	padding : 0;
+
+}
+
+.content-area {
+	width  : 100%;
+	height : 100%;
+	margin : 0;
+	padding: 0;
+
+	.tab-pane.content-loading & {
+		display : none;
+	}
+}
+
+.content-loading-label {
+	display: none;
+	width : 100%;
+	position : absolute;
+	top : 0;
+	background: transparent;
+	height : 100%;
+
+	& > span {
+		height: 20px;
+		display: block;
+		text-align: center;
+		position: absolute;
+		bottom: 30px;
+		width: 100%;
+		padding-bottom : 50px;
+	}
+
+	.tab-pane.content-loading & {
+		display: block;
+	}
+}

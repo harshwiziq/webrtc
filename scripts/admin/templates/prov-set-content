@@ -1,0 +1,15 @@
+{
+	"name"      : "content",
+	"custom"    : {
+		"view_api"                : "https://view-api.box.com/1/",
+		"sessionduration"         : 300,
+		"api_token_encrypted"     : "707756f8aab4b7bd258e0d4dab0611c816129d3d88bf73640ce292ab737a8dca630aaec4d27a4789f0eb76c9bfa70598367bed3da973a0e496b3b2d87aec27ff",
+		"thumbnails_dimensions"   : "128x128,256x256,216x216",
+		"s3_access_key"           : "0WATX2TYP6SVTPNM1W82",
+		"s3_secret_key_encrypted" : "5c28092d29c33a0e3c313919bf24f7c8809f9d07434796c414d7a18f5795132556ceaa43f525d084e886d66e3f2a1a3562d8d7c914cef2b7d88ea46c4cb56ac1",
+		"bucket_name"             : "boxcontent",
+		"s3_key_name"             : "uploadcontent",
+		"content_server"          : "https://__CMS_URI/cms/",
+		"s3_bucket_url"           : "https://boxcontent.s3.amazonaws.com/"
+	}
+}

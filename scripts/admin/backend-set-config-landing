@@ -1,0 +1,68 @@
+#!/bin/bash
+
+CURL_OPTIONS='-sS --post301 --post302 -kL'
+CURL_OUTINFO='\r\nHTTP CODE : %{http_code}'
+BASENAME=`basename $0`
+DIR=`dirname $0`
+JQ=$DIR/../bin/jq-linux64
+TEMPLATE=$DIR/templates/backend-set-prov
+TMP=/tmp/backend-set-prov$$
+
+trap "rm -f $TMP;" SIGHUP SIGINT SIGTERM EXIT
+#set -e
+#
+# defaults
+#
+PROTOCOL=https
+PORT=443
+
+function usage {
+	echo Usage : $0 'options [ -h host ]';
+	echo '  options can be a sequence of the following:';
+	echo '      --name  (MANDATORY) : landing profile name';
+	echo '      --host  (MANDATORY) : ip or FQDN for the landing server';
+	echo '      --proto (OPTIONAL)  : protocol (http | https). defaults to https';
+	echo '      --port  (OPTIONAL)  : port. defaults to 443';
+:w
+	echo '      -h                  : ip or FQDN of the backend server';
+	exit 1;
+}
+
+[ $# -lt 1 ] && { usage; }
+
+while [ $# -gt 0 ];
+do
+	[ "$1" == '--name' ] && { PROFILE_NAME=$2; shift; }
+	[ "$1" == '--host' ] && { LANDING_ADDR=$2; shift; }
+	[ "$1" == '--proto' ] && { PROTOCOL=$2; shift; }
+	[ "$1" == '--port' ] && { PORT=$2; shift; }
+	[ "$1" == '-h' ] && { HOST=$2; shift; }
+
+	shift;
+done
+
+#
+# Check for Mandatories
+#
+[ "$PROFILE_NAME" == "" ] && usage;
+[ "$LANDING_ADDR" == "" ] && usage;
+[ "$PROTOCOL" == "" ] && usage;
+[ "$PORT" == "" ] && usage;
+
+#
+# Create the request body
+#
+cp $TEMPLATE $TMP
+sed -i 's@/PROFILE_NAME/@'$PROFILE_NAME'@g' $TMP
+sed -i 's@/HOST/@'$LANDING_ADDR'@g' $TMP
+sed -i 's@/PROTOCOL/@'$PROTOCOL'@g' $TMP
+sed -i 's@/PORT/@'$PORT'@g' $TMP
+cat $TMP | $JQ '.'
+
+[ "$HOST" == "" ] && {
+		export HOST=http://localhost:2178;
+}
+
+curl $CURL_OPTIONS -w "$CURL_OUTINFO" -H "Content-Type: application/json" -X POST -d @$TMP $HOST/backend/admin/profile/landing
+
+echo

@@ -1,0 +1,175 @@
+@import "./variables.less";
+@import "../../mixins/elements";
+@import "./recording.less";
+
+/*
+ * Does'nt seem to work */
+svg path#Bounds {
+	fill : transparent;
+}
+
+#widget-nav {
+	background-color: @brand-info;
+	color : white;
+	box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.04);
+	border-top : none;
+	border-left : none;
+	border-right : none;
+	border-bottom: 0.5px solid @gray;
+
+	body.av-fullscreen &,
+	body.av-tiled & {
+		background-color: rgba(0,0,0,0.3);
+	}
+
+	.nav-inner {
+		span.vc-menu-icon {
+			font-size : 28px;
+			margin-top: 10px;
+			margin-left: 20px;
+		}
+	}
+
+	.navbar-brand {
+		border-right : 1px solid rgba(255, 255, 255, .16);
+		body.av-fullscreen &,
+		body.av-tiled & {
+			border-right : 0px;
+			background-color : rgba(0,0,0,.3);
+			border-radius: 100px;
+		}
+	}
+
+	.title {
+		.title-inner {
+			background-color: rgba(255,255,255,.1);
+			span {
+			}
+		}
+	}
+
+	li a {
+		.transition-prop(background-color, .5s);
+
+		&.background-success {
+			background-color : @brand-success !important;
+		}
+		&:hover {
+			background-color : fadeout(@brand-primary, 70%);
+		}
+		body.av-fullscreen &,
+		body.av-tiled & {
+			background-color : transparent;
+			&:hover {
+				background-color : fadeout(@brand-primary, 70%);
+			}
+		}
+	}
+
+	li.disabled a:hover {
+		background-color : transparent;
+	}
+	li#av {
+		background-color: rgba(0,0,0,.1);
+		border: 1px solid fadeout(white, 80%);
+		body.av-fullscreen &,
+		body.av-tiled & {
+			background-color: rgba(0,0,0,.3);
+		}
+
+		.av-menu-item.text-danger svg {
+			fill : @brand-danger;
+		}
+		.av .av-menu-item {
+			border : 1px solid @brand-success;
+
+			&.text-danger {
+				border-color : @brand-danger;
+			}
+		}
+		.av-menu-item svg {
+			fill : @brand-success;
+		}
+		.av-menu-toggle.disabled a {
+			border-color : @gray-darker;
+		}
+		.av-menu-toggle.disabled svg,
+		.av-menu-toggle.disabled circle {
+			fill : @gray-darker;
+			stroke : @gray-darker;
+		}
+		.av.av-menu-toggle.disabled a {
+			border-color : fadeout(@brand-danger, 50%);
+		}
+		.av.av-menu-toggle.disabled svg,
+		.av.av-menu-toggle.disabled svg path,
+		.av.av-menu-toggle.disabled svg shape,
+		.av.av-menu-toggle.disabled circle {
+			fill : fadeout(@brand-danger, 50%);
+			stroke : fadeout(@brand-danger, 50%);
+		}
+		.av.av-menu-toggle.busy a {
+			border-color : @gray-darker;
+		}
+		.av.av-menu-toggle.busy svg,
+		.av.av-menu-toggle.busy svg path,
+		.av.av-menu-toggle.busy svg shape,
+		.av.av-menu-toggle.busy circle {
+			fill : @gray-darker;
+			stroke : @gray-darker;
+		}
+	}
+	li#nav-screenshare a.on {
+		background-color : @brand-danger;
+	}
+	li#self svg, li#self img {
+		border : 1px solid fadeout(@gray-light, 70%);
+		border-radius : 3px;
+		fill : @gray;
+		& rect {
+			fill : @gray-light;
+		}
+	}
+
+	svg, svg path.shape  {
+		fill : white;
+		circle {
+			fill : @brand-danger;
+		}
+	}
+
+	li.disabled svg, 
+	li.disabled svg path, 
+	li.disabled svg circle, 
+	li.disabled svg path.shape {
+		fill : @gray-darker;
+		stroke : @gray-darker;
+	}
+	li.enabled, 
+	li.enabled svg, 
+	li.enabled svg path, 
+	li.enabled svg path.shape {
+		body.av-fullscreen & a,
+		body.av-tiled & a,
+		a {
+			background-color : @brand-primary;
+			.drop-shadow2(0, 2px, 4px, 0px, .1);
+		}
+	}
+
+	li#separator {
+		border-right : 1px solid rgba(255, 255, 255, .16);
+
+		body.av-fullscreen &,
+		body.av-tiled & {
+			border-right : 0px;
+		}
+	}
+
+	.counter {
+		background-color : @brand-danger;
+		color : white;
+		line-height : 18px;
+		font-size : 10px;
+	}
+}

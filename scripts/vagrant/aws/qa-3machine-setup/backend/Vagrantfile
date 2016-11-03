@@ -1,0 +1,55 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+VAGRANTFILE_API_VERSION = "2"
+Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
+  config.vm.define :delta do |x|
+    x.vm.box = "hashicorp/precise64"
+	x.vm.hostname = "backend-qa"
+
+	config.vm.provision "file", source: "../../../common/install.sh", destination: "install/install.sh"
+	config.vm.provision "file", source: "../../../common/install-nodejs.sh", destination: "install/install-nodejs.sh"
+	config.vm.provision "file", source: "../../../common/install-ntp.sh", destination: "install/install-ntp.sh"
+	config.vm.provision "file", source: "../../../common/install-mongo.sh", destination: "install/install-mongo.sh"
+	config.vm.provision "file", source: "../../../common/install-docker.sh", destination: "install/install-docker.sh"
+	config.vm.provision "file", source: "../../../common/install-redis.sh", destination: "install/install-redis.sh"
+	config.vm.provision "file", source: "../../../common/grant-perms.sh", destination: "install/grant-perms.sh"
+	config.vm.provision "file", source: "../../../common/grant-sudo.sh", destination: "install/grant-sudo.sh"
+	config.vm.provision "file", source: "../../../common/install-authbind.sh", destination: "install/install-authbind.sh"
+
+	# Copy configuration files
+	config.vm.provision "file", source: "../../../common/configs/redis/redis.conf", destination: "install/configs/redis/redis.conf"
+
+	config.vm.provision "shell", inline: <<-SHELL
+
+		export WIZIQ_USER=ubuntu;
+
+		cd install;
+		bash -x install.sh | tee /home/$WIZIQ_USER/install.log 2>/home/$WIZIQ_USER/install.errors
+		cat << EOF >> /home/$WIZIQ_USER/.bashrc
+		export PS1='`/home/ubuntu/vc/scripts/aws/my-public-ip`-backend \\w # '
+EOF
+SHELL
+
+    x.vm.provider :aws do |aws, override|
+	
+      aws.block_device_mapping = [{ 'DeviceName' => '/dev/sda1', 'Ebs.VolumeSize' => 50 }]
+
+      aws.access_key_id = ENV['AWS_KEY']
+      aws.secret_access_key = ENV['AWS_SECRET']
+      aws.keypair_name = ENV['AWS_KEYNAME']
+      aws.elastic_ip = ENV['AWS_ELASTIC_IP_BACKEND_QA']
+      aws.ami = "ami-a21529cc"
+      aws.region = "ap-northeast-1"
+      aws.instance_type = "m3.medium"
+      aws.security_groups = [ "launch-wizard-1" ]
+	  aws.tags = {
+	        'Name' => 'Backend QA'
+	      }
+
+      override.vm.box = "dummy"
+      override.ssh.username = "ubuntu"
+      override.ssh.private_key_path = ENV['AWS_KEYPATH']
+    end
+  end
+end

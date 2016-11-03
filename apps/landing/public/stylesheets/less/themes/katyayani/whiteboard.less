@@ -1,0 +1,15 @@
+@import "./variables.less";
+@import "../../mixins/elements";
+
+.wb-outer .wb-controls-area .navbar>ul.nav>li {
+	a {
+		.transition-prop(background-color);
+	}
+	& a:hover {
+		background-color : fadeout(@brand-primary, 96%);
+	}
+
+	& svg {
+		fill : @brand-info;
+	}
+}

@@ -1,0 +1,107 @@
+#!/bin/bash
+
+set -e
+
+function prompt_ek_install () {
+while true; do
+	read -p "Are you sure this is the central log server you are trying to
+	configure ? This would install Fluentd, ElasticSearch and Kibana on the
+	machine (Y/N) " yn
+	case $yn in
+		[Yy]* ) _install_ek ; break;;
+	[Nn]* ) exit 1;;
+* ) echo "Please answer yes or no.";;
+	esac
+done
+}
+
+#https://www.elastic.co/guide/en/elasticsearch/reference/current/setup-repositories.html
+function install_elasticsearch () {
+#Elasticsearch requires JDK.
+sudo apt-get update
+sudo apt-get install openjdk-7-jre -y
+wget -qO - https://packages.elastic.co/GPG-KEY-elasticsearch | sudo apt-key add -
+echo "deb http://packages.elastic.co/elasticsearch/2.x/debian stable main" | sudo tee -a /etc/apt/sources.list.d/elasticsearch-2.x.list
+sudo apt-get update && sudo apt-get install elasticsearch -y
+sudo update-rc.d elasticsearch defaults 95 10
+sudo service elasticsearch restart
+}
+
+#https://www.elastic.co/guide/en/kibana/current/setup.html
+function install_kibana () {
+echo "deb http://packages.elastic.co/kibana/4.4/debian stable main" | sudo tee -a /etc/apt/sources.list
+sudo apt-get update && sudo apt-get install kibana -y
+sudo update-rc.d kibana defaults 95 10
+sudo service kibana restart
+}
+
+
+function _install_ek () {
+install_elasticsearch
+install_kibana
+}
+
+function install_fluent () {
+sudo apt-get install ntp -y
+sudo curl -L https://toolbelt.treasuredata.com/sh/install-ubuntu-trusty-td-agent2.sh | sh
+sudo update-rc.d td-agent defaults
+}
+
+function configstart_fluent_node () {
+sudo cp "$SCRIPT_PATH"/conf/fluentd/log-forward.conf /etc/td-agent/
+sudo cp "$SCRIPT_PATH"/conf/fluentd/td-agent-forward /etc/default/td-agent
+restart_fluent
+}
+
+
+function configstart_fluent_aggregate () {
+sudo /usr/sbin/td-agent-gem install fluent-plugin-elasticsearch
+
+sudo cp "$SCRIPT_PATH"/conf/fluentd/log-aggregate.conf /etc/td-agent/
+sudo cp "$SCRIPT_PATH"/conf/fluentd/td-agent-aggregate /etc/default/td-agent
+restart_fluent
+}
+
+function restart_fluent () {
+sudo /etc/init.d/td-agent restart
+sudo /etc/init.d/td-agent status
+}
+
+
+function verboselog () {
+	echo "Run install logforward if you want to create logging infra for a
+	running node."
+	echo "Run install logaggregate if you want to create logging infra for
+	central logging server (rishikesh) where logs are dumped for further
+	analysis."
+}
+
+# Script start. arguments
+[ $# -lt 1 ] && { echo Usage : "$(basename "$0")" 'logforward | logaggregate';
+verboselog ; exit 1;}
+
+TYPE="$1";
+
+if [ "$TYPE" != "logforward" ] && [ "$TYPE" != "logaggregate" ] ; then 
+	echo Incorrect option. Please provide either of logforward or logaggregate; 
+	verboselog
+	exit 1;
+fi;
+
+
+SCRIPT_PATH=$(dirname "$(which "$0")")
+
+if [ "$TYPE" == "logaggregate" ] ; then 
+	echo Installing logging stuff for Centralized Log aggregator machine Rishikesh.
+	prompt_ek_install
+	install_fluent
+	configstart_fluent_aggregate
+	echo "Point your browser at port 5601 to access the Kibana UI. For example,
+	localhost:5601 or http://YOURDOMAIN.com:5601"
+else 
+	echo Installing logging stuff for node.
+	install_fluent
+	configstart_fluent_node
+fi;
+
+

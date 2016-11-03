@@ -1,0 +1,70 @@
+@import "variables.less";
+
+.content-menu, .content-preview-menu {
+	position : absolute;
+	height : @nav-height;
+	width : 100%;
+	bottom : 0;
+	opacity : 0;
+	.transition(opacity, .5s, ease-out);
+	.navbar {
+		padding-top : @nav-height;
+		.transition(padding-top, .5s, ease-out);
+	}
+
+	.navbar {
+		margin: 0;
+	}
+
+	ul.nav.navbar-nav {
+		text-align : center;
+		width : 100%;
+
+		li {
+			float : initial;
+			display : inline-block;
+		}
+
+		li.content-library {
+			position : absolute;
+			left : 0;
+
+			svg {
+				height : 20px;
+			}
+		}
+	}
+}
+
+.content-menu {
+	display: block;
+	bottom : 0;
+
+	.tab-pane.content-fullview-with-library & {
+		display : none;
+	}
+	.tab-pane.content-fullview &:hover {
+		display: block;
+		opacity : 1;
+		.navbar {
+			padding-top : 0;
+			transition : padding-top .5s ease-in-out;
+			-webkit-transition : padding-top .5s ease-in-out;
+			-moz-transition : padding-top .5s ease-in-out;
+		}
+	}
+}
+
+.content-preview-menu {
+	display: none;
+
+	.tab-pane.content-preview &,
+	.tab-pane.content-fullview-with-library & {
+		display: block;
+		opacity: 1;
+	}
+
+	.navbar {
+		padding-top: 0;
+	}
+}

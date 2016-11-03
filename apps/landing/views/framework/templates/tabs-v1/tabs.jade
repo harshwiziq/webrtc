@@ -1,0 +1,22 @@
+// Content area
+div.tabs-container-outer
+	div.tabs-container
+		ul.nav.nav-tabs(role="tablist")
+			li.add.active
+				div.tab-li-outer
+					div.tab-name
+						a.tab-name(href='#empty', aria-controls="empty", role="tab", data-toggle="tab", style="display:none")
+						span New
+					div.tab-dropdown
+						a.dropdown-toggle(href="#", data-toggle="dropdown", aria-controls="empty", role="button", aria-haspopup="true", aria-expanded="false")
+							include images/arrow-down.svg
+						ul.dropdown-menu
+		div.tab-content
+			div#empty.tab-pane.active.fade.in(role="tabpanel")
+				.feature
+					include images/featured-arrow.svg
+					span Start sharing something ...
+				.center
+					include images/content.svg
+					p.headline You are not currently sharing anything ...
+					p You can share multiple resources within your session. Click on the "New" dropdown menu above to select what to share.

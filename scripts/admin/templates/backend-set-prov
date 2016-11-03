@@ -1,0 +1,6 @@
+{
+	"name"     : "/PROFILE_NAME/",
+	"address"  : "/HOST/",
+	"protocol" : "/PROTOCOL/",
+	"port"     : /PORT/
+}

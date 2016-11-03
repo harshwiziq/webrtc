@@ -1,0 +1,54 @@
+#!/bin/bash
+
+
+CURL_OPTIONS='-sS --post301 --post302 -kL'
+CURL_OUTINFO='\r\nHTTP CODE : %{http_code}'
+BASENAME=`basename $0`
+DIR=`dirname $0`
+JQ=$DIR/../bin/jq-linux64
+TEMPLATE=$DIR/templates/auth-remove-social
+TMP=/tmp/auth-remove-social$$
+
+trap "rm -f $TMP;" SIGHUP SIGINT SIGTERM EXIT
+#set -e
+
+function usage {
+	echo Usage : $0 'options [ -h host ]';
+	echo '      --profile  (MANDATORY)  : organization profile name for auth ( "default" for now )';
+	echo '      --auth     (MANDATORY)  : type of sso (google/facebook/wiziq)';
+	echo '      -h                      : ip or FQDN of the auth server';
+	exit 1;
+}
+
+[ $# -lt 1 ] && { usage; }
+
+while [ $# -gt 0 ];
+do
+	[ "$1" == '--profile' ] && { PROFILE_NAME=$2; shift; }
+	[ "$1" == '--auth' ] && { AUTH_TYPE=$2; shift; }
+	[ "$1" == '-h' ] && { HOST=$2; shift; }
+
+	shift;
+done
+
+#
+# Check for Mandatories
+#
+[ "$PROFILE_NAME" == "" ] && usage;
+[ "$AUTH_TYPE" == "" ] && usage;
+
+#
+# Create the request body
+#
+cp $TEMPLATE $TMP
+sed -i 's@/PROFILE_NAME/@'$PROFILE_NAME'@g' $TMP
+sed -i 's@/AUTH_TYPE/@'$AUTH_TYPE'@g' $TMP
+cat $TMP | $JQ '.'
+
+[ "$HOST" == "" ] && {
+		export HOST=http://localhost:2178;
+}
+
+curl $CURL_OPTIONS -w "$CURL_OUTINFO" -H "Content-Type: application/json" -X POST -d @$TMP $HOST/auth/config/sso/remove
+
+echo

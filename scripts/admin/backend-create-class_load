@@ -1,0 +1,84 @@
+#!/bin/bash
+
+BASENAME=`basename $0`
+DIR=`dirname $0`
+JQ=$DIR/../bin/jq-linux64
+CURL_OPTIONS='-sS -kL --post301 --post302'
+STATUS_CODE='\n\ncode : %{http_code}'
+TMP_FILE=/tmp/class-config-wiziq.$$
+
+trap "rm -f $TMP_FILE; exit" SIGHUP SIGINT SIGTERM EXIT
+#set -e
+#
+# Update Subscription
+#
+
+function usage {
+	echo Usage : $0 'class-template [ options ]';
+	echo
+	echo '    available class-templates are:'
+	for i in templates/class-*;
+	do
+		echo '        * '$i
+	done
+	echo
+	echo '    options:';
+	echo '      --class-id  (MANDATORY) : <anything you like>';
+	echo '      --starts-in (MANDATORY) : <time-in-seconds>';
+	echo '      --duration  (MANDATORY) : <time-in-minutes> # defaults to 1 hour';
+	echo '      --anon                  : permissions profile name for the anonymous attendee. eg : "pawan","akshit","anon-demo" etc';
+	echo '      -h                      : ip or FQDN of the backend host';
+	echo '      --help                  : prints this help';
+	exit 1;
+}
+
+[ $# -lt 1 ] && { usage; }
+
+ANON_ROLE="";
+
+PROFILE=$1; shift;
+
+[ ! -f $PROFILE ] && { echo Profile $PROFILE non-existent; exit 1; }
+
+while [ $# -gt 0 ];
+do
+		[ "$1" == "--class-id" ] && { CLASS_ID=$2; shift; }
+		[ "$1" == "--date" ] && { 
+			START_TIME_CST=$2
+			shift;
+		}
+		[ "$1" == "--duration" ] && { DURATION=$2; shift; }
+		[ "$1" == "--anon" ] && { ANON_ROLE=$2; shift; }
+		[ "$1" == "-h" ] && { HOST=$2; shift; }
+		[ "$1" == "--help" ] && { usage; }
+		shift;
+done;
+
+#
+# Check for mandatory parameters
+#
+[ "$CLASS_ID" = "" ] && usage;
+[ "$START_TIME_CST" = "" ] && usage;
+[ "$DURATION" = "" ] && usage;
+
+#
+# Apply filters from the command line
+#
+cp $PROFILE $TMP_FILE
+sed -iback "s@__START_TIME@$START_TIME_CST@g" $TMP_FILE
+sed -iback "s@__CLASS_ID@$CLASS_ID@g" $TMP_FILE
+sed -iback "s@__DURATION@$DURATION@g" $TMP_FILE
+sed -iback "s@__ANON_ROLE@$ANON_ROLE@g" $TMP_FILE
+
+cat $TMP_FILE | $JQ '.'
+[ $? -ne 0 ] && { echo JSON Parse error. Aborting ...; exit -1; }
+
+[ "$HOST" == "" ] && {
+	export HOST=http://localhost:2178;
+}
+
+echo -------- RESPONSE --------
+echo 
+curl $CURL_OPTIONS -w "$STATUS_CODE" -H "Content-Type: application/json" -X POST -d @$TMP_FILE $HOST/backend/wiziq/$CLASS_ID/config 
+
+echo

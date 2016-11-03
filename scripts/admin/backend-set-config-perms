@@ -1,0 +1,78 @@
+#!/bin/bash
+
+CURL_OPTIONS='-sS --post301 --post302 -kL'
+CURL_OUTINFO='\r\nHTTP CODE : %{http_code}'
+BASENAME=`basename $0`
+DIR=`dirname $0`
+JQ=$DIR/../bin/jq-linux64
+TMP=/tmp/backend-set-perms$$
+
+trap "rm -f $TMP;" SIGHUP SIGINT SIGTERM EXIT
+#set -e
+
+function usage {
+	echo Usage : $0 ' profile-name options [ -h host ]';
+	echo 
+	echo '  standard profile-names supported are'
+	echo '      * wiziq-presenter'
+	echo '      * default'
+	echo '      * anonymous'
+	echo '      * anon-demo'
+	echo '      * wiziq-anon'
+	echo 
+	echo '  options can be a sequence of the following:';
+	echo '      --profile (MANDATORY) : perms profile file path. The following are readily available';
+	echo '                              though you should be able to define your own:';
+
+	for i in templates/perms-profile-*;
+	do
+		echo '                                  * ' $i;
+	done;
+
+	echo '      -h                    : ip or FQDN of the backend host';
+	echo '      --help                : prints this help';
+	exit 1;
+}
+
+[ $# -lt 2 ] && { usage; }
+PROFILE_NAME=$1; shift;
+
+[ "$PROFILE_NAME" != 'wiziq-presenter' ] &&
+[ "$PROFILE_NAME" != 'default' ] &&
+[ "$PROFILE_NAME" != 'anonymous' ] &&
+[ "$PROFILE_NAME" != 'anon-demo' ] &&
+[ "$PROFILE_NAME" != 'wiziq-anon' ] && {
+	echo incorrect profile-name : \"$PROFILE_NAME\"
+	usage;
+}
+
+while [ $# -gt 0 ];
+do
+	[ "$1" == '--profile' ] && { TEMPLATE=$2; shift; }
+	[ "$1" == "-h" ] && { HOST=$2; shift; }
+	[ "$1" == "--help" ] && { usage; }
+
+	shift;
+done
+
+#
+# Check for Mandatories
+#
+[ "$PROFILE_NAME" == "" ] && usage;
+[ "$TEMPLATE" == "" ] && usage;
+[ ! -f $TEMPLATE ] && { echo profile \"$TEMPLATE\" not found; exit 1;}
+
+#
+# Create the request body
+#
+cp $TEMPLATE $TMP
+sed -i 's@/PROFILE_NAME/@'$PROFILE_NAME'@g' $TMP
+cat $TMP | $JQ '.'
+
+[ "$HOST" == "" ] && {
+		export HOST=http://localhost:2178;
+}
+
+curl $CURL_OPTIONS -w "$CURL_OUTINFO" -H "Content-Type: application/json" -X POST -d @$TMP $HOST/backend/admin/profile/perms
+
+echo

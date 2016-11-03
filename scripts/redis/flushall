@@ -1,0 +1,32 @@
+#!/bin/bash
+
+#
+# Calculate canonical path for this script's directory
+#
+CANPATH=`pwd`/`dirname $0`
+
+JQ=$CANPATH/../bin/jq-linux64
+REDIS_CLI=`which redis-cli`
+[ -z "$REDIS_CLI" ] && { echo 'redis-cli not installed. aborting' > /dev/stderr ; exit 1; }
+
+YES=$1
+
+echo +------------------------------------------------+
+echo +                                 
+echo + Listing all keys
+echo +                                 
+echo +------------------------------------------------+
+
+$REDIS_CLI KEYS "*"
+
+[ "$YES" == '' ] && {
+		echo 
+		echo +------------------------------------------------+
+		echo +                                 
+		echo + Keys not really deleted. Run "`basename $0` keys -y" to flush all cache.
+		echo +                                 
+		echo +------------------------------------------------+
+		exit 0;
+}
+
+$REDIS_CLI FLUSHALL

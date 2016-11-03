@@ -1,0 +1,8 @@
+
+
+we receive docker up
+	when image name is null
+	but the actual status of container is 'created'!
+
+
+==========================================================

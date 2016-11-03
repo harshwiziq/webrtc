@@ -1,0 +1,11 @@
+{
+	"host": {
+		"id": 1
+	},
+	"prov": {
+		"ip": "__PROV_IP"
+	},
+	"docker": {
+		"image": "avinashwiziq/wiziq-session:2.2"
+	}
+}

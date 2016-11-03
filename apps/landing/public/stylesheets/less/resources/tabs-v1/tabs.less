@@ -1,0 +1,134 @@
+@tab-line-height : 15px;
+@tab-padding-top : 10px;
+@tab-padding-bottom : 10px;
+@tab-border-width : 1px;
+
+#widget-tabs {
+	.tab-inner, .tabs-container-outer, .tabs-container {
+		height : 100%;
+	}
+
+	.nav-tabs {
+		height : @tab-line-height + @tab-padding-top + @tab-padding-bottom;
+		display : flex;
+		flex-wrap : nowrap;
+		justify-content : flex-start;
+		align-content : stretch;
+		border : none;
+
+		li.disabled {
+			a {
+				cursor : default;
+			}
+		}
+	}
+
+	.nav-tabs > li[role="presentation"] {
+		flex-shrink: 1;
+		overflow : hidden;
+		max-width: 25%;
+	}
+
+	.nav-tabs > li.add {
+		margin-bottom : 5px;
+		border-radius : 3px;
+	}
+
+	.nav-tabs > li,
+	.nav-tabs > li.add {
+		margin-right : 5px;
+		.tab-li-outer {
+			border-style : none;
+			border-top-left-radius : 3px;
+			border-top-right-radius : 3px;
+			white-space : nowrap;
+			height : 100%;
+			line-height : 32px;
+		}
+
+		&:not(.disabled) > .tab-li-outer {
+			@close-button-width : 40px;
+			div.tab-name {
+				width : calc(~'100% - @{close-button-width}');
+				display : inline-block;
+				vertical-align : middle;
+				text-overflow: ellipsis;
+				overflow: hidden;
+				white-space: nowrap;
+				padding : 0 10px 0 10px;
+			}
+
+			div.tab-dropdown, div.tab-close {
+				border-left : thin solid;
+				width : @close-button-width;
+				display : inline-block;
+				vertical-align : middle;
+				text-align : center;
+				line-height : 24px;
+
+				svg {
+					height : @tab-line-height / 2;
+					cursor : pointer;
+				}
+			}
+		}
+
+		&.disabled > .tab-li-outer {
+			div.tab-name {
+				width : 100%;
+				display : inline-block;
+				vertical-align : middle;
+				text-overflow: ellipsis;
+				overflow: hidden;
+				white-space: nowrap;
+				padding : 0 20px 0 20px;
+			}
+
+			div.tab-dropdown, div.tab-close {
+				display: none;
+			}
+		}
+	}
+
+	.nav-tabs > li.add > .tab-li-outer {
+		width : 90px;
+	}
+
+	.nav-tabs > li.tab-is-shared {
+	}
+
+	.tab-content {
+		height : calc(~'100% - @{tab-line-height} - @{tab-padding-top} - @{tab-padding-bottom} - @{tab-border-width}');
+		width : 100%;
+		position : absolute;
+
+		.tab-pane {
+			height : 100%;
+		}
+	}
+
+	#empty {
+		.feature {
+			margin : 8px 16px;
+			height : 40px;
+
+			svg {
+				height : 40px;
+				margin-right : 16px;
+			}
+		}
+		.center {
+			position : absolute;
+			top : 50%;
+			transform : translateY(-50%);
+			width : 100%;
+			text-align : center;
+			svg {
+				height : 120px;
+			}
+			p.headline {
+				font-size : 28px;
+			}
+		}
+	}
+}

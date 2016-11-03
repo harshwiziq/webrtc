@@ -1,0 +1,40 @@
+#!/bin/bash
+BASENAME=`basename $0`
+
+function usage {
+	echo Usage : $BASENAME 'host-name prov-ip node-id docker_url log_server';
+	exit 1;
+}
+
+
+[ $# -lt 5 ] && { usage; }
+
+HOST=$1; shift;
+PROV_IP=$1; shift;
+NODE_ID=$1; shift;
+DOCKER_URL=$1; shift;
+LOG_SERVER=$1; shift;
+
+curl -k -H "Content-Type: application/json" -X POST -d '{
+	"prov" : {
+		"ip"       : "'$PROV_IP'",
+	    "protocol" : "https"
+	},
+	"node" : {
+		"id"    : "'$NODE_ID'",
+		"host"  : "localhost",
+		"port"  : 443,
+		"route" : "/agent/node/v1"
+	},
+	"docker" : {
+		"url"        : "'$DOCKER_URL'",
+		"user_id"    : "sess_docker",
+		"password"   : "wiziq_docker",
+		"sess_image" : "wiziq/session:v2.2" 
+	},
+	"logs" : {
+		"server" : "'$LOG_SERVER'"
+	}
+}' $HOST/prov/config/session/v1/acquire
+
+echo

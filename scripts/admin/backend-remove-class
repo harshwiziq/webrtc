@@ -1,0 +1,45 @@
+#!/bin/bash
+
+BASENAME=`basename $0`
+DIR=`dirname $0`
+JQ=$DIR/../bin/jq-linux64
+CURL_OPTIONS='-sS -kL --post301 --post302'
+STATUS_CODE='\n\ncode : %{http_code}'
+
+#set -e
+#
+# Update Subscription
+#
+
+function usage {
+	echo Usage : $0 'options';
+	echo '      --class-id  (MANDATORY) : <anything you like>';
+	echo '      -h                      : ip or FQDN of the backend host';
+	echo '      --help                  : prints this help';
+	exit 1;
+}
+
+[ $# -lt 1 ] && { usage; }
+
+while [ $# -gt 0 ];
+do
+		[ "$1" == "--class-id" ] && { CLASS_ID=$2; shift; }
+		[ "$1" == "-h" ] && { HOST=$2; shift; }
+		[ "$1" == "--help" ] && { usage; }
+		shift;
+done;
+
+#
+# Check for mandatory parameters
+#
+[ "$CLASS_ID" = "" ] && usage;
+
+[ "$HOST" == "" ] && {
+	export HOST=http://localhost:2178;
+}
+
+echo -------- RESPONSE --------
+echo 
+curl $CURL_OPTIONS -w "$STATUS_CODE" -H "Content-Type: application/json" -X DELETE $HOST/backend/wiziq/$CLASS_ID/config 
+
+echo

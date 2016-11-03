@@ -1,0 +1,57 @@
+.alert {
+	font-family: inherit !important;
+	color : white;
+	opacity : 1;
+	position : relative;
+
+	a.refresh {
+		font-weight : bold;
+		color : white;
+		text-decoration : underline;
+	}
+
+	&.auto-dismiss {
+		opacity : 0;
+		animation : fade-out 5.5s;
+		-webkit-animation : fade-out 5.5s;
+		-moz-animation : fade-out 5.5s;
+
+		&:hover {
+			opacity : 1;
+		}
+	}
+}
+
+@keyframes fade-out {
+	0% {
+		opacity : 1;
+	}
+	70% {
+		opacity : 1;
+	}
+	100% {
+		opacity : 0;
+	}
+}
+@-moz-keyframes fade-out {
+	0% {
+		opacity : 1;
+	}
+	70% {
+		opacity : 1;
+	}
+	100% {
+		opacity : 0;
+	}
+}
+@-webkit-keyframes fade-out {
+	0% {
+		opacity : 1;
+	}
+	70% {
+		opacity : 1;
+	}
+	100% {
+		opacity : 0;
+	}
+}

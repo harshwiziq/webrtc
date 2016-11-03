@@ -1,0 +1,65 @@
+#!/bin/bash
+
+CURL_OPTIONS='-sS --post301 --post302 -kL'
+CURL_OUTINFO='\r\nHTTP CODE : %{http_code}'
+BASENAME=`basename $0`
+DIR=`dirname $0`
+JQ=$DIR/../bin/jq-linux64
+TEMPLATE=$DIR/templates/prov-set-av-tokbox-v2
+TMP=/tmp/prov-set-av-tokbox-v2$$
+
+trap "rm -f $TMP;" SIGHUP SIGINT SIGTERM EXIT
+#set -e
+
+function usage {
+	echo Usage : $0 'options [ -h host ]';
+	echo '  options can be a sequence of the following:';
+	echo '      --apikey (MANDATORY)    : API Key';
+	echo '      --apisecret (MANDATORY) : API secret';
+	echo '      --ext_id                : Chrome extension id for screenshare. Default if not given';
+	echo '      --update                : update existing configuration';
+	exit 1;
+}
+
+[ $# -lt 1 ] && { usage; }
+
+#
+# Defaults
+#
+
+CHROME_SS_EXT_ID="cofnnopnhjmpoomoholnofbneelimjdm"
+
+while [ $# -gt 0 ];
+do
+	[ "$1" == '--apikey' ] && { KEY=$2; shift; }
+	[ "$1" == '--apisecret' ] && { SECRET=$2; shift; }
+	[ "$1" == '--ext_id' ] && { CHROME_SS_EXT_ID=$2; shift; }
+	[ "$1" == '--update' ] && { UPDATE=y; }
+	[ "$1" == '-h' ] && { HOST=$2; shift; }
+
+	shift;
+done
+
+#
+# Check for Mandatories
+#
+[ "$KEY" == "" ] && usage;
+[ "$SECRET" == "" ] && usage;
+
+#
+# Create the request body
+#
+cp $TEMPLATE $TMP
+sed -i "s@__API_KEY@$KEY@g" $TMP
+sed -i "s@__API_SECRET@$SECRET@g" $TMP
+sed -i "s@__CHROME_SCREEN_EXT_ID@$CHROME_SS_EXT_ID@g" $TMP
+cat $TMP | $JQ '.'
+
+[ "$HOST" == "" ] && {
+		export HOST=http://localhost:2178;
+}
+
+[ "$UPDATE" == "y" ] || curl $CURL_OPTIONS -w "$CURL_OUTINFO" -H "Content-Type:application/json" -X POST -d @$TMP $HOST/prov/v1/config/resource
+[ "$UPDATE" == "y" ] && curl $CURL_OPTIONS -w "$CURL_OUTINFO" -H "Content-Type:application/json" -X PUT -d @$TMP $HOST/prov/v1/config/resource/av-tokbox-v2
+
+echo

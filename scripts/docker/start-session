@@ -1,0 +1,41 @@
+#!/bin/bash
+
+function abs_path () {
+    target=$1;
+    cd $target > /dev/null 2>&1;
+    [ $? -ne 0 ] && { echo Error : directory \"$target\" does not exist > /dev/stderr; exit 1; }
+    pwd
+    cd - > /dev/null 2>&1;
+}
+
+#
+# Process the arguments
+#
+[ $# -lt 2 ] && { echo Usage : `basename $0` '<session-dir> <container-name> [ -q ]'; exit 1;}
+
+SESS_DIR=$1; shift;
+NAME=$1; shift;
+QUIET=$1; shift;
+
+#
+# Do some checks
+#
+
+ABS_PATH=`abs_path $SESS_DIR`
+IMAGE='avinashwiziq/wiziq-session:v3.0'
+INTERNAL_PORT=3179
+#
+# Start
+#
+echo '#########################################################'
+echo '#'
+echo '# Starting docker image : ' $IMAGE
+echo '# <session-dir>         : ' $ABS_PATH '<==' $SESS_DIR
+echo '# <name>                : ' $NAME
+echo '#'
+echo '#########################################################'
+
+sudo docker run -dt -p $INTERNAL_PORT -v $ABS_PATH:/session --name $NAME $IMAGE
+sudo docker ps | grep $NAME
+
+[ "$QUIET" == '-q' ] || sudo docker logs --follow $NAME

@@ -1,0 +1,60 @@
+@import "./variables.less";
+@import "../../mixins/elements";
+
+a.tooltip {
+	position: relative;
+	top: 0px;
+	left: 0px;
+	text-align: center;
+}
+
+.tooltip-content {
+	padding: 6px 10px;
+	font-size : 10px;
+	line-height : 10px;
+	min-width: 75px;
+	max-width: 400px;
+	background-color: #000;
+	color: white;
+	height: auto;
+	border-radius: 5px;
+	opacity: 0;
+	position:absolute;
+	visibility: hidden;
+	word-wrap: break-word;
+	-webkit-transition: opacity 0.5s;
+	-moz-transition: opacity 0.5s;
+	-ms-transition: opacity 0.5s;
+	-o-transition: opacity 0.5s;
+	transition: opacity 0.5s;
+	white-space: nowrap;
+	z-index : 2000;
+}
+
+a.tooltip:hover div.tooltip-content {
+	opacity: .3;
+	visibility: visible;
+}
+
+a.tooltip div.tooltip-content,
+body.av-fullscreen a.av-menu-item.tooltip div.tooltip-content,
+body.av-tiled a.av-menu-item.tooltip div.tooltip-content {
+	top: 48px;
+	left: 50%;
+	transform : translateX(-50%);
+}
+
+a.tooltip div.tooltip-content.top {
+	top: -28px;
+	left: 50%;
+	transform : translateX(-50%);
+}
+
+a.tooltip div.tooltip-content {
+	body.av-fullscreen &,
+	body.av-tiled & {
+		left : 54px;
+		top : 50%;
+		transform : translateY(-50%);
+	}
+}

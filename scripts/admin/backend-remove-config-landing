@@ -1,0 +1,42 @@
+#!/bin/bash
+
+CURL_OPTIONS='-sS --post301 --post302 -kL'
+CURL_OUTINFO='\r\n[ http-code: %{http_code} ]'
+BASENAME=`basename $0`
+DIR=`dirname $0`
+JQ=$DIR/../bin/jq-linux64
+TMP=/tmp/backend-get-config-prov.$$
+
+trap "rm -f $TMP;" SIGHUP SIGINT SIGTERM EXIT
+#set -e
+
+function usage {
+	echo Usage : $0 'options';
+	echo '      --name (MANDATORY) : profile name';
+	echo '      --host             : backend host';
+	echo '      --help             : show this help';
+	exit 1;
+}
+
+while [ $# -gt 0 ];
+do
+	[ "$1" == '--name' ] && { PROFILE_NAME=$2; shift; }
+	[ "$1" == '--host' ] && { HOST=$2; shift; }
+	[ "$1" == '--help' ] && { usage; }
+	[ "$1" == '-h' ] && { HOST=$2; shift; }
+
+	shift;
+done
+
+#
+# Check Mandatories
+#
+[ "$PROFILE_NAME" == "" ] && usage;
+
+[ "$HOST" == "" ] && {
+		export HOST=http://localhost:2178;
+}
+
+curl $CURL_OPTIONS -w "$CURL_OUTINFO" -H "Content-Type: application/json" -X DELETE $HOST/backend/admin/profile/landing/$PROFILE_NAME
+
+echo

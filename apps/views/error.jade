@@ -1,0 +1,17 @@
+doctype html
+html
+	head
+		title= title
+		link(href='/stylesheets/404.css', rel='stylesheet' )
+	body
+	.wrapper.row2
+		#container.clear
+			section#fof.clear
+				.hgroup
+					h1 Something Just Went Wrong !
+					h2 #{status} Error
+				p #{message}
+				p
+				span.detail #{detail}&nbsp
+				if code
+					span.code (#{code})

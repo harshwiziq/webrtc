@@ -1,0 +1,131 @@
+@import "./variables.less";
+@import "../../mixins/elements";
+
+@keyframes heartbeat {
+  0% {
+	fill : @brand-warning;
+    transform: scale(1.0, 1.0);
+  }
+  20% {
+	fill : @brand-danger;
+    transform: scale(1.2, 1.2);
+  }
+  100% {
+	fill : @brand-warning;
+    transform: scale(1.0, 1.0);
+  }
+}
+
+@color-white: #ffffff;
+
+#atl-header {
+	background-color: @color-white;
+	border: solid 1px @gray-light;
+	span.atl-title {
+		color : @brand-info;
+	}
+	span.atl-counter {
+		color : @brand-info;
+	}
+	a.fa.fa-times {
+		color: @gray;
+	}
+	a.fa.fa-times:hover {
+		color: #f0ad4e;
+	}
+}
+.atl-list-item {
+	background-color: #ffffff;
+	box-shadow: 0 2px 4px 0 fadeout(black, 90%);
+
+	.atl-user-meta-header {
+		color : @brand-info;
+	}
+
+	.atl-avatar-wrap {
+		border : 1px solid @gray-light;
+		box-shadow : 0 1px 2px 0 fadeout(black, 85%);
+		svg {
+			fill : @brand-warning;
+			stroke : @brand-warning;
+		}
+		div {
+			background: @brand-warning;
+		}
+	}
+
+
+}
+.atl-user-meta .atl-controls-bar {
+	.atl-audio-level {
+		border-left : solid 1px @brand-warning;
+		border-right : solid 1px @brand-warning;
+		border-bottom : solid 1px @brand-warning;
+
+		&:after {
+			color : @brand-warning;
+		}
+	}
+
+	.atl-audio-level .vu-indicator {
+		& svg {
+			fill : @gray;
+		}
+		& .active svg{
+			fill : @color-white;
+		}
+	}
+
+	.atl-control {
+		fill : @gray-dark;
+		background-color : @gray-light;
+		border : solid 0.8px @gray;
+		transition : all .3s ease-out;
+		cursor : initial;
+
+		&.atl-audio-set, &.atl-audio-set:hover {
+			background-color: @brand-success;
+		}
+
+		&.att-state-set {
+			background-color: @color-white;
+			fill : @gray;
+		}
+
+		&.att-state-set.slashed {
+			background-color: @brand-danger;
+			border: none;
+			fill : @color-white;
+		}
+
+		&.att-state-busy {
+			background-color: @color-white;
+			fill : @brand-warning;
+			animation: heartbeat 0.52s ease-in-out infinite;
+		}
+
+		&.att-state-busy.slashed {
+			background-color: @color-white;
+			fill : @brand-danger;
+			animation: heartbeat 0.52s ease-in-out infinite;
+		}
+
+		&:hover, &.slashed:hover {
+			/*
+			 * to be changed */
+			//background-color: @brand-secondary;
+		}
+
+		&.read-only:hover, &.read-only.slashed:hover {
+			//background-color: @gray;
+			cursor : default;
+			transform : none;
+		}
+
+	}
+}
+
+/* Specifically disable hover action on vu-meters */
+.atl-audio-level:hover {
+	background-color: @gray;
+}

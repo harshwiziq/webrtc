@@ -1,0 +1,9 @@
+{
+      "profile_name"  : "/PROFILE_NAME/",
+      "auth_type"     : "/AUTH_TYPE/",
+      "client_id"     : "/CLIENT_ID/",
+      "client_secret" : "/CLIENT_SECRET/",
+      "callback_url"  : "/CALLBACK_URL/"
+}
+
+

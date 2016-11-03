@@ -1,0 +1,47 @@
+{
+	"name"  : "/PROFILE_NAME/",
+	"perms" : {
+		"allowed" : {
+			"layout" : {
+				"change" : {
+					"users" : "self"
+				}
+			},
+			"tab" : {
+				"close" : {
+					"users" : "self"
+				},
+				"change" : {
+					"users" : "*"
+				}
+			},
+			"content" : {
+				"library" : {
+					"users" : "self"
+				}
+			},
+			"av-microphone" : {
+				"mute" : {
+					"users" : "self"
+				}
+			},
+			"av-camera" : {
+				"disable" : {
+					"users" : "self"
+				}
+			}
+		},
+		"denied" : {
+			"layout" : {
+				"change" : {
+					"users" : "user1"
+				}
+			},
+			"content" : {
+				"library" : {
+					"users" : "user1"
+				}
+			}
+		}
+	}
+}

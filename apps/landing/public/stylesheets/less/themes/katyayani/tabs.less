@@ -1,0 +1,202 @@
+@import "./variables.less";
+@import "../../mixins/elements";
+
+.transition-prop(@prop, @duration:0.5s, @ease:ease-out) {
+  -webkit-transition: @prop @duration @ease;
+  -moz-transition: @prop @duration @ease;
+  -o-transition: @prop @duration @ease;
+  transition: @prop @duration @ease;
+}
+#widget-tabs {
+	background-color: transparent;
+	.drop-shadow(0px, 2px, 4px, 0.1);
+
+	.nav-tabs > li > .tab-li-outer {
+		background-color : white;
+	}
+
+	.nav-tabs > li.add {
+		div.tab-li-outer {
+			background-color : white;
+			box-shadow : 0 1px 2px 0 rgba(0, 0, 0, 0.1);
+			div.tab-name span {
+				color : @brand-info;
+			}
+			a {
+				background-color : white;
+				color : @brand-info;
+			}
+
+			&:hover {
+				a.dropdown-toggle {
+					color : @brand-info;
+					cursor : pointer;
+				}
+				ul.dropdown-menu > li > a {
+					color : @brand-info;
+				}
+				ul.dropdown-menu > li > a:focus,
+				ul.dropdown-menu > li > a:hover {
+					background-color : @gray-light;
+				}
+			}
+			div.tab-dropdown {
+				border-color : @gray-light;
+
+				a > svg {
+					fill : @gray-light;
+					.transition-prop(fill);
+				}
+				a:hover > svg {
+					fill : @gray-light;
+					.transition-prop(fill);
+				}
+				a:active > svg {
+					fill : @brand-warning;
+				}
+			}
+			&:hover div.tab-dropdown {
+				border-color : @gray;
+
+				a > svg {
+					fill : @gray;
+					.transition-prop(fill);
+					.scale(1.5);
+				}
+				a:hover > svg {
+					fill : @gray;
+					.transition-prop(fill);
+				}
+				a:active > svg {
+					fill : @brand-warning;
+				}
+			}
+		}
+	}
+
+	.nav-tabs .tab-close svg {
+		transition : transform .5s, fill .5s;
+		-webkit-transition : transform .5s, fill .5s;
+		-moz-transition : transform .5s, fill .5s;
+	}
+
+	.nav-tabs > li,
+	.nav-tabs > li.tab-is-shared {
+		&:not(.disabled):hover {
+			background-color : rgba(0,0,0,0.12);
+			.transition-prop(background-color);
+			a {
+				.transition-prop(color, .5s);
+			}
+			a, a:hover {
+				color : @gray-lighter;
+			}
+		}
+		.tab-li-outer {
+			background-color : rgba(0,0,0,0.1);
+			.transition-prop(background-color);
+		}
+		a {
+			color : @brand-info;
+			background-color : transparent;
+			text-decoration : none;
+		}
+		a:hover, a:active {
+			text-decoration : none;
+		}
+		div.tab-close {
+			border-color : @gray;
+
+			a > svg {
+				fill : @gray;
+			}
+			:not(.disabled) > a:hover > svg {
+				fill : @gray-dark;
+			}
+			:not(.disabled) > a:active > svg {
+				fill : @brand-warning;
+			}
+		}
+		&:not(.disabled):hover div.tab-close {
+			border-color : @gray-lighter;
+
+			a > svg {
+				fill : @gray-lighter;
+			}
+			a:hover > svg {
+				fill : @gray-lighter;
+			}
+			a:active > svg {
+				fill : @brand-warning;
+			}
+		}
+	}
+
+	.nav-tabs > li.tab-is-shared.active {
+		&:not(.disabled):hover {
+			.tab-li-outer {
+				background-color : darken(@brand-primary, 5%);
+				.transition-prop(background-color);
+			}
+		}
+		.tab-li-outer {
+			background-color : @brand-primary;
+			color : fadeout(white, 20%);
+			.transition-prop(background-color);
+
+			a {
+				color : fadeout(white, 20%);
+				.transition-prop(color, .5s);
+			}
+		}
+		&:not(.disabled) .tab-li-outer {
+			 a:hover, a:active {
+				color : white;
+				text-decoration : none;
+			}
+		}
+		div.tab-close {
+			border-color : rgba(255, 255, 255, 0.16);
+
+			a > svg {
+				fill : rgba(255, 255, 255, 0.5);
+			}
+		}
+		&:not(.disabled) > .tab-close {
+			a:hover > svg {
+				fill : white;
+			}
+			a:active > svg {
+				fill : @brand-warning;
+			}
+		}
+		a {
+		}
+	}
+
+	.nav-tabs > li:not(.disabled) div.tab-close a:hover {
+		svg {
+			.scale(1.5);
+		}
+	}
+
+	.tab-content {
+		background-color : white;
+		#empty {
+			.feature {
+				color : @brand-primary;
+				fill : fadeout(@brand-primary, 90%);
+			}
+			.center svg {
+				fill : @gray;
+			}
+		}
+
+		.tab-pane {
+			border-top : 5px solid @brand-primary;
+		}
+		div#empty {
+			border-top : 0px solid transparent;
+		}
+	}
+}

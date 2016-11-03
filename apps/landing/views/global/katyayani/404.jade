@@ -1,0 +1,17 @@
+doctype html
+html
+	head
+		title= title
+		link(href='/landing/stylesheets/less/site/katyayani/404.min.css', rel='stylesheet' )
+	body
+		.container
+			include wiziq-bar
+			.main
+				.picture
+					include images/documents.svg
+				.message
+					.middle
+						p.large Looks like you got lost
+						p Sorry, we didn't find the page you were looking for ...
+						button
+							a(href="javascript:void()", onclick="window.history.back()") Take me back!

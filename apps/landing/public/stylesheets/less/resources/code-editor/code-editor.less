@@ -1,0 +1,35 @@
+@import "../../layouts/katyayani/variables.less";
+@editor-menu-height : 61px;
+
+.code-editor-outer {
+	height: 100%;
+	text-align: center;
+}
+.shared-code-editor {
+	margin: 0 auto;
+	width: 100%;
+	height: calc(~'100% - @{editor-menu-height}');
+	text-align: left;
+	z-index: 0;
+}
+.code-editor-menu {
+	position: relative;
+	height : @editor-menu-height;
+
+	ul.navbar-nav {
+		width: 100%;
+		text-align: center;
+		li.editor-icon {
+			float: none;
+			display: inline-block;
+
+			input[type="file"] {
+				display: none;
+			}
+		}
+
+		svg {
+			height : @nav-height-effective;
+		}
+	}
+}

@@ -1,0 +1,12 @@
+{
+	"class_id" : "/CLASS_ID/",
+	"user"     : {	
+		"ID"         : "/USER_ID/",
+        "Email"      : "/EMAIL/",
+        "Role"       : "/ROLE/",
+        "auth_via"   : "/AUTH_VIA/",
+	    "ScreenName" : "/DISPLAY/"	
+	}
+}
+
+

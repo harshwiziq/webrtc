@@ -1,0 +1,82 @@
+@import "./variables.less";
+
+#widget-screenshare {
+	width : 0;
+
+	&.active {
+		margin-top:   @nav-height-effective;
+		margin-left:   @gutter-northsouth / 2;
+		margin-right:   @padding-side;
+		margin-bottom:   @margin-bottom;
+		position: absolute;
+		top:      0px;
+		right:    0px;
+		bottom:   0px;
+		overflow: hidden;
+	}
+
+	body.av-fullscreen &.active {
+		margin-top:   @nav-height-effective + 10px;
+		margin-left:   @padding-side + 10px;
+		position: absolute;
+		top:      0px;
+		left:     0px;
+	}
+}
+
+
+.set-screenshare-size (@width) {
+	#widget-screenshare.active {
+		width : calc(~'100% - @{width} - @{padding-side} * 2 - @{gutter-northsouth}');
+	}
+
+	body.av-fullscreen #widget-screenshare.active {
+		width : @width / 2;
+		height : @width / 2;
+	}
+}
+
+/*******************************
+
+   Screenshare dialog styling
+
+******************************/
+
+
+
+@header-padding: 71px;
+@button-padding: 41px;
+@svg-size: 50px;
+
+.remodal {
+	max-width: 600px !important;
+
+	svg {
+		width: @svg-size !important;
+		height: @svg-size !important;
+	}
+
+	.remodal-ss-header, .remodal-ss-footer {
+		padding-left: @header-padding !important;
+		padding-right: @header-padding !important;
+	}
+
+	.remodal-ss-header {
+		margin-top: 17px !important;
+	}
+	.remodal-ss-footer {
+		margin-top: 20px !important;
+	}
+}
+
+.remodal-close {
+	left: auto !important;
+	right: 0 !important;
+}
+
+.remodal-confirm {
+	padding-left: @button-padding !important;
+	padding-right: @button-padding !important;
+	width: 100% !important;
+	height: 56px !important;
+}

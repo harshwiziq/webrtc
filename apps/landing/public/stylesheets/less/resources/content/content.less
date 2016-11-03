@@ -1,0 +1,24 @@
+@import (css) "crocodoc.viewer.min.css";
+@import (css) "jquery.fileupload.css";
+@import "variables.less";
+@import "upload.less";
+@import "library.less";
+@import "player.less";
+@import "menu.less";
+@import "pointer.less";
+
+.tab-pane.content-loading,
+.tab-pane.content-preview,
+.tab-pane.content-fullview-with-library {
+	.content-lib-upload {
+		opacity: 0;
+	}
+
+	.content-player-outer {
+		height : calc(~'100% - @{library-height}');
+	}
+}
+
+.tab-pane.content-loading .content-player-outer {
+	display: block;
+}

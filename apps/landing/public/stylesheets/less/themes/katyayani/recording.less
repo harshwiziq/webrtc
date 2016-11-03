@@ -1,0 +1,60 @@
+@import "./variables.less";
+
+#widget-nav li.av-recording {
+	& #av-menu-recording svg {
+		path {
+			fill : white;
+		}
+		polyline {
+			stroke : white;
+		}
+		circle {
+			fill : @gray-darker;
+		}
+	}
+	&.disabled #av-menu-recording svg,
+	&.recording-busy #av-menu-recording svg {
+		path {
+			fill : @gray-darker;
+		}
+		polyline {
+			stroke : @gray-darker;
+		}
+		circle {
+			fill : @gray-darker;
+		}
+	}
+	&.recording-on #av-menu-recording svg {
+		path {
+			fill : white;
+		}
+		polyline {
+			stroke : white;
+		}
+		circle {
+			fill : transparent;
+			animation : blink-circle 1s infinite;
+		}
+	}
+}
+
+@keyframes blink-circle {
+	0% {
+		fill : transparent;
+	}
+	50% {
+		fill : @brand-danger;
+	}
+	80% {
+		fill : @brand-danger;
+	}
+}
+
+@keyframes blink-polyline {
+	0% {
+		stroke : transparent;
+	}
+	100% {
+		stroke : @brand-danger;
+	}
+}

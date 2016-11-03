@@ -1,0 +1,59 @@
+@import "./variables.less";
+@import "../../mixins/elements";
+
+#widget-tabs {
+	background-color: transparent;
+	.drop-shadow(2px, 2px, 12px, 0.4);
+
+	.nav-tabs > li.add:hover {
+		a.dropdown-toggle {
+			color : @brand-primary;
+			cursor : pointer;
+		}
+
+		a.dropdown-toggle.read-only {
+			cursor : default;
+		}
+		ul.dropdown-menu > li > a:focus,
+		ul.dropdown-menu > li > a:hover {
+			color : @brand-primary;
+		}
+	}
+
+	.nav-tabs li {
+		span.fa:hover {
+			color : @brand-warning;
+		}
+	}
+
+	/*
+	.nav-tabs > li.tab-is-shared {
+		color : @brand-danger;
+		a {
+			color : @brand-danger;
+		}
+	}
+	*/
+	.nav-tabs > li.tab-is-shared {
+		a {
+			background-color : fadeout(@brand-primary, 70%);
+			color : white;
+		}
+	}
+
+	.nav-tabs > li.tab-is-shared.active {
+		a {
+			background-color : white;
+			color : @brand-primary;
+		}
+	}
+
+	.tab-content {
+		#empty {
+			background-image : url('https://i.stack.imgur.com/q8Mym.png');
+			background-size : contain;
+			background-repeat : no-repeat;
+			background-position : center;
+		}
+	}
+}

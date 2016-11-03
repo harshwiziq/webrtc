@@ -1,0 +1,19 @@
+.lcb-room-chat
+	audio
+		source(src='/landing/audio/pop.wav', type='audio/wav')
+	.lcb-room-header
+		.lcb-room-meta
+			.lcb-room-heading
+				span Conversation
+			.lcb-close
+				a(href="javascript:void(0)")
+					include close.svg
+
+	.lcb-messages-container
+		ul.lcb-messages(aria-live="polite")
+
+	.lcb-notification-bar
+
+	form.lcb-entry.background-color-body.disabled
+		textarea.lcb-entry-input(placeholder="Got Something To Say")
+		button.lcb-entry-button.fa.fa-check.text-success(type="submit")

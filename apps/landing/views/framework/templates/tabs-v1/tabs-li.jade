@@ -1,0 +1,8 @@
+li(role="presentation", data-tab-uuid=uuid, data-mod-name=module_name, title=display_name, class= active ? 'active' : '')
+	div.tab-li-outer
+		div.tab-name
+			a.tab-name(href= '#' + id, aria-controls=id, role="tab", data-toggle="tab") #{display_name}
+		if !disable_close
+			div.tab-close
+				a.tab-close(href='javascript:void(0)')
+					include images/close.svg

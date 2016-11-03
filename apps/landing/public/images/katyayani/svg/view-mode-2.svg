@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg class="av-tiled" viewBox="0 0 40 36" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <g id="Atoms" stroke="none" stroke-width="1" >
+        <g id="Modelsheet-#1" transform="translate(-251.000000, -1449.000000)" >
+            <g id="View-Modes" transform="translate(135.000000, 1387.000000)">
+                <g id="View-Mode-2" transform="translate(116.000000, 62.000000)">
+                    <path d="M17.8823529,36 L0,36 L0,24 L0,0 L40,0 L40,13.6168263 L40,27.1535771 C40,32.049862 36.0421605,36 31.1599182,36 L22.1176471,36 L22.1176471,20.1764706 L40,20.1764706 L40,15.9411765 L22.1176471,15.9411765 L22.1176471,4.97379915e-14 L17.8823529,4.97379915e-14 L17.8823529,15.9411765 L0,15.9411765 L0,20.1764706 L17.8823529,20.1764706 L17.8823529,36 Z" id="Combined-Shape"></path>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

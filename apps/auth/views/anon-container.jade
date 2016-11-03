@@ -1,0 +1,14 @@
+.anon-container.main-stage(style="display:none")
+	.header
+		a.title-icon
+			include images/arrow-left.svg
+		.user
+			include images/user.svg
+		.info
+			p.headline Continue as a guest
+			p Input your name and enter this section
+
+	form#anon-form
+		input#display_name(require="required", onfocus='$("#anon-form").addClass("in-focus")', onblur='$("#anon-form").removeClass("in-focus")')
+		label(for="display_name") Name or Nickname
+		button(disabled=true) Get in

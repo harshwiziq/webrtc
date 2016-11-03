@@ -1,0 +1,161 @@
+@import "./variables.less";
+@import "../../mixins/elements";
+
+#widget-chat {
+	background-color: transparent;
+
+	.main-inner {
+		background-color : white;
+		body.av-fullscreen &,
+		body.av-tiled & {
+			background-color : transparent;
+		}
+	}
+}
+
+@color-others : #feebda;
+@color-own    : #d6ebf6;
+
+.lcb-initial, .lcb-message-meta {
+	background-color: @color-others;
+	&:after {
+		background: @color-others;
+	}
+}
+
+.lcb-room-header {
+	background: transparent;
+	.drop-shadow2(0px, 2px, 4px, 0px, 0.06);
+
+	body.av-tiled &,
+	body.av-fullscreen & {
+		background-color : fadeout(black, 70%);
+	}
+
+	body.av-tiled & svg path,
+	body.av-fullscreen & svg path {
+		fill: white;
+	}
+}
+
+.lcb-message, .lcb-message-own {
+	font-size : 12px;
+	color: @brand-info;
+
+	.lcb-message-time {
+		font-size : 0.8em;
+	}
+	img {
+		margin-top : 0.5em;
+	}
+
+	& .lcb-initial {
+		color: @brand-info;
+	}
+	& .lcb-message-name {
+		border-bottom: 1px solid @text-color;
+	}
+	& .lcb-message-displayname {
+		font-weight : 300;
+	}
+	&.lcb-message-mentioned {
+		background: #ffe9ee;
+	}
+	&.lcb-message-mentioned:before {
+		background: #f22472;
+	}
+	pre {
+		background: none;
+	}
+}
+
+.lcb-message-own {
+
+	& .lcb-initial {
+		background-color: @color-own;
+	}
+	& .lcb-message-meta {
+		background : @color-own;
+		&:after {
+			background-color: @color-own;
+		}
+	}
+
+	& .lcb-message-name {
+		border-bottom: 1px solid @gray-darker;
+	}
+}
+
+.lcb-room-heading {
+	body.av-tiled &,
+	body.av-fullscreen & {
+		color : white;
+	}
+	body.av-tiled & svg:hover,
+	body.av-fullscreen & svg:hover {
+		cursor: pointer;
+		path {
+			fill: @brand-warning;
+		}
+	}
+}
+
+.lcb-close a {
+	fill : white;
+
+	&:hover, &:active {
+		fill : @brand-info;
+	}
+}
+
+.lcb-notification-bar {
+	color: @gray;
+	background-color: rgba(255,255,255,.7);
+	padding-bottom: 2px;
+	padding-left: 8px;
+	margin-bottom: 4px;
+	font-weight: 400;
+	font-size: 10px;
+
+	body.av-fullscreen &,
+	body.av-tiled & {
+		color: white;
+		background-color : transparent;
+	}
+}
+.lcb-entry {
+	&.disabled {
+		.lcb-entry-button {
+			display : none;
+		}
+	}
+	textarea {
+		background: transparent;
+		padding-left : 8px;
+		font-size : 12px;
+		&:focus {
+			background-color : fadeout(white, 50%);
+			color : @brand-info;
+		}
+	}
+	body.av-fullscreen & {
+		textarea.lcb-entry-input {
+		}
+	}
+}
+.lcb-entry-button {
+	font-size: 2em !important;
+	padding-right: 7px;
+
+	&:hover {
+		color: @brand-warning;
+	}
+}
+
+.lcb-room-chat {
+	body.av-fullscreen &,
+	body.av-tiled & {
+		background-color : transparent;
+	}
+}
+
